@@ -144,7 +144,7 @@ input, select, textarea {
 		}
 
 	body {
-		color: #212931;
+		color: #57565C;
 	}
 
 	body, input, select, textarea {
@@ -2623,6 +2623,18 @@ input, select, textarea {
 			margin: 2.5rem 0;
 			width: 100%;
 		}
+		.image.miro {
+			display: block;
+			margin: 2.5rem 0;
+			width: 100%;
+			height: 30%;
+		}
+		.image.figma {
+			display: block;
+			margin: 2.5rem 0;
+			width: 100%;
+			height: 30%;
+		}
 		.image.logo.fit {
 			display: block;
 			max-width: 15%;
@@ -3243,7 +3255,7 @@ input, select, textarea {
 			width: 100%;
 			height: 100%;
 			background-color: #212931;
-			background-image: url("../../images/overlay.png"), linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../../images/bg_IT4.jpg");
+			background-image: url("../../images/overlay.png"), linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../../images/bg_ux.jpg");
 			background-size: auto,								auto,														100% auto;
 			background-position: center,								center,														top center;
 			background-repeat: repeat,								no-repeat,													no-repeat;
@@ -3267,7 +3279,7 @@ input, select, textarea {
 			-webkit-transition-delay: 0.75s;
 			-ms-transition-delay: 0.75s;
 			transition-delay: 0.75s;
-			background: #5f6362;
+			background: #acabbc;
 			content: '';
 			display: block;
 			height: 100%;

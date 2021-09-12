@@ -9,7 +9,7 @@
 /* Wrapper */
 
 	#wrapper {
-		background-color: #5f6362;
+		background-color: #605768;
 		background-image: url("../../images/overlay.png"), linear-gradient(0deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url("../../images/bg_IT.jpg");
 		background-size: auto,								auto,														100% auto;
 		background-position: center,								center,														top center;

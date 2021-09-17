@@ -2585,7 +2585,25 @@ input, select, textarea {
 		.icon.brands:before {
 			font-family: 'Font Awesome 5 Brands';
 		}
+/*Animations*/
+@-moz-keyframes spin {
+	100% {
+		-moz-transform: rotate(360deg);
+	}
+}
 
+@-webkit-keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
 /* Image */
 
 	.image {
@@ -2642,6 +2660,21 @@ input, select, textarea {
   			height: 50px;
   			object-fit: contain;
 			align-self: left;
+		}
+	
+		.blob {
+			position: absolute;
+			top: -175px;
+			right: 20%;
+			-webkit-animation: spin 35s linear infinite;
+			-moz-animation: spin 35s linear infinite;
+			animation: spin 35s linear infinite;
+		}
+		.blob-container {
+			transform: scale(0.85,0.85);
+			position: relative;
+			top: 50px;
+			left: 50px;
 		}
 		
 

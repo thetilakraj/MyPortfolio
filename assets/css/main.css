@@ -2627,13 +2627,13 @@ input, select, textarea {
 			display: block;
 			margin: 2.5rem 0;
 			width: 100%;
-			height: 51%;
+			height: 50%;
 		}
 		.image.figma {
 			display: block;
 			margin: 2.5rem 0;
 			width: 100%;
-			height: 70%;
+			height: 50%;
 		}
 		.image.logo.fit {
 			display: block;

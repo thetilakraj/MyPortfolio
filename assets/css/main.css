@@ -2672,8 +2672,6 @@ input, select, textarea {
 		}
 		.blob-container {
 			display: block;
-			margin: 2rem 0;
-			width: 100%;
 			transform: scale(0.75,0.75);
 			position: relative;
 			top: 10px;

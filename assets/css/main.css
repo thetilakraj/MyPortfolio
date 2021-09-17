@@ -2671,7 +2671,7 @@ input, select, textarea {
 			animation: spin 40s linear infinite;
 		}
 		.blob-container {
-			transform: scale(0.8,0.8);
+			transform: scale(0.75,0.75);
 			position: relative;
 		
 		}

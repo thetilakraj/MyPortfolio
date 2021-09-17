@@ -2664,7 +2664,7 @@ input, select, textarea {
 	
 		.blob {
 			position: absolute;
-			top: -175px;
+			top: -125px;
 			right: 20%;
 			-webkit-animation: spin 40s linear infinite;
 			-moz-animation: spin 40s linear infinite;

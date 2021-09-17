@@ -2772,7 +2772,7 @@ input[type="radio"]:focus + label:before {
   animation: spin 40s linear infinite;
 }
 .blob-container {
-  transform: scale(0.6, 0.6);
+  transform: scale(0.7, 0.7);
   position: relative;
 }
 

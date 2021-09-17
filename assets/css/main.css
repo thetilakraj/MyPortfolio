@@ -2664,16 +2664,17 @@ input, select, textarea {
 	
 		.blob {
 			position: absolute;
-			top: -125px;
+			top: -175px;
 			right: 20%;
-			-webkit-animation: spin 40s linear infinite;
-			-moz-animation: spin 40s linear infinite;
-			animation: spin 40s linear infinite;
+			-webkit-animation: spin 35s linear infinite;
+			-moz-animation: spin 35s linear infinite;
+			animation: spin 35s linear infinite;
 		}
 		.blob-container {
-			transform: scale(0.6,0.6);
+			transform: scale(0.7,0.7);
 			position: relative;
-		
+			top: 25px;
+			left: 50px;
 		}
 		
 

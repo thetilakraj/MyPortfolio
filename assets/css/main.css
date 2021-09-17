@@ -2673,7 +2673,7 @@ input, select, textarea {
 		.blob-container {
 			transform: scale(0.7,0.7);
 			position: relative;
-			top: 25px;
+			top: 10px;
 			left: 50px;
 		}
 		

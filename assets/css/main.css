@@ -2765,7 +2765,7 @@ input[type="radio"]:focus + label:before {
 
 .blob {
   position: absolute;
-  top: -200px;
+  top: -224rem;
   right: 10%;
   -webkit-animation: spin 40s linear infinite;
   -moz-animation: spin 40s linear infinite;

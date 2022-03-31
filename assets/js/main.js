@@ -12,6 +12,7 @@
 		$header = $('#header'),
 		$nav = $('#nav'),
 		$main = $('#main'),
+		$msgSubmit = $('#msgSubmit'),
 		$navPanelToggle, $navPanel, $navPanelInner;
 
 	// Breakpoints.
@@ -253,6 +254,22 @@
 
 			});
 
-		}
+		};
+	//send email 
+	$msgSubmit.click(
+		function sendEmail() {
+		Email.send({
+		Host: "smtp.gmail.com",
+		Username : "",
+		Password : "",
+		To : 'thetilakraj@gmail.com',
+		From : "thetilakraj@gmail.com",
+		Subject : "Message from your website!",
+		Body : "This message is sent from your website.",
+		}).then(
+			message => alert("mail sent successfully")
+		);
+}
+)	
 
 })(jQuery);

@@ -9,7 +9,7 @@
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="shortcut icon" href="images/TRlogo.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images/tr_favicon.ico" type="image/x-icon" />
     <noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript>
@@ -50,7 +50,7 @@
         <ul class="links">
           <li class="active"><a href="index.html">UI/UX</a></li>
           <li><a href="generic.html">SAP Fiori/UI5</a></li>
-          <!-- <li><a href="elements.html">ABOUT ME</a></li> -->
+        <li><a href="elements.html">ABOUT ME</a></li>
         </ul>
         <ul class="icons">
           <li>
@@ -205,7 +205,7 @@
               </div>
             </div>
             <ul class="actions">
-              <li><input type="submit" value="Send Message" /></li>
+              <li><input id="msgSubmit" type="submit" value="Send Message" onClick="sendEmail()"/></li>
             </ul>
           </form>
         </section>
@@ -286,6 +286,7 @@
     <script src="assets/js/jquery.scrolly.min.js"></script>
     <script src="assets/js/browser.min.js"></script>
     <script src="assets/js/breakpoints.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script src="assets/js/util.js"></script>
     <script src="assets/js/main.js"></script>
   </body>

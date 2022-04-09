@@ -2705,6 +2705,19 @@ input[type="radio"]:focus + label:before {
 }
 /* Image */
 
+.blob {
+  position: absolute;
+  top: -224rem;
+  right: 50%;
+  -webkit-animation: spin 40s linear infinite;
+  -moz-animation: spin 40s linear infinite;
+  animation: spin 40s linear infinite;
+}
+.blob-container {
+  transform: scale(0.7, 0.7);
+  position: relative;
+}
+
 .image {
   border: 0;
   display: inline-block;
@@ -2754,6 +2767,7 @@ input[type="radio"]:focus + label:before {
   width: 100%;
   height: 50%;
 }
+
 .image.logo.fit {
   display: block;
   max-width: 15%;
@@ -2761,19 +2775,6 @@ input[type="radio"]:focus + label:before {
   height: 50px;
   object-fit: contain;
   align-self: left;
-}
-
-.blob {
-  position: absolute;
-  top: -224rem;
-  right: 10%;
-  -webkit-animation: spin 40s linear infinite;
-  -moz-animation: spin 40s linear infinite;
-  animation: spin 40s linear infinite;
-}
-.blob-container {
-  transform: scale(0.7, 0.7);
-  position: relative;
 }
 
 .image.fit:first-child {
@@ -4798,7 +4799,6 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
   right: 0;
   text-align: right;
   top: 0;
-  vertical-align: middle;
   width: 7rem;
 }
 

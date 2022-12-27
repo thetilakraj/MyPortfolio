@@ -2143,6 +2143,14 @@ hr {
   padding: 1.5rem;
 }
 
+.frame{
+  border: solid 2px;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  width: calc(100% - 4rem);
+  border-color: #eeeeee;
+}
+
 .box > :last-child,
 .box > :last-child > :last-child,
 .box > :last-child > :last-child > :last-child {
@@ -2685,7 +2693,7 @@ input[type="radio"]:focus + label:before {
   font-family: "Font Awesome 5 Brands";
 }
 /*Animations*/
-@-moz-keyframes spin {
+ @-moz-keyframes spin {
   100% {
     -moz-transform: rotate(360deg);
   }
@@ -2717,6 +2725,32 @@ input[type="radio"]:focus + label:before {
   transform: scale(0.7, 0.7);
   position: relative;
 }
+/* .image.main {
+  position: relative;
+  z-index: 2;
+}
+.blob {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  animation: spin 40s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.blob-container {
+  transform: scale(0.7, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+} */
+
 
 .image {
   border: 0;
@@ -3903,7 +3937,7 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
 }
 
 #nav ul.links li.active {
-  background-color: #ffffff;
+  background-color: #d2c9d3;
 }
 
 #nav ul.links li.active a {
@@ -3935,7 +3969,7 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
 /* Main */
 
 #main {
-  background-color: #ffffff;
+  background-color: #d2c9d3;
   position: relative;
   margin: 0 auto;
   width: calc(100% - 4rem);

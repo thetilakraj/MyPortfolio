@@ -2165,7 +2165,36 @@ hr {
 
 .box {
   border-color: #eeeeee;
+  border-radius: 25px;
+
 }
+
+.box-image {
+  width: auto;
+  height: auto;
+  border: 25px solid #eeeeee;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+.image-collage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4em;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.image-collage img {
+  width: auto;
+  height: 600px;
+  border: 50px solid #eeeeee;
+  border-radius: 25px;
+  object-fit: cover;
+}
+
+
 
 /* Button */
 

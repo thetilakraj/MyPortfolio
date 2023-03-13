@@ -2189,7 +2189,7 @@ hr {
 .image-collage img {
   width: auto;
   height: 600px;
-  border: 50px solid #eeeeee;
+  border: 25px solid #eeeeee;
   border-radius: 25px;
   object-fit: cover;
 }

@@ -219,12 +219,14 @@
 
   // });
 
-  function sendEmail() {
+  function sendEmail(event) {
+    event.preventDefault(); // Prevent form submission
+  
     // Get the values of the form fields
     var name = document.getElementById("name").value;
     var email = document.getElementById("email").value;
     var message = document.getElementById("message").value;
-
+  
     // Validate the form fields
     if (!name) {
       alert("Please enter your name.");
@@ -238,26 +240,20 @@
       alert("Please enter a message.");
       return;
     }
-
-    // Create the email message
-    var emailMessage =
-      "Name: " + name + "\nEmail: " + email + "\nMessage: " + message;
-
-    // Encode the values of the form fields
-    var encodedName = encodeURIComponent(name);
-    var encodedEmail = encodeURIComponent(email);
-    var encodedMessage = encodeURIComponent(emailMessage);
-
-    var subject = "Message from " + encodedName;
-    var encodedSubject = encodeURIComponent(subject);
-
-    // Send the email using the mailto: protocol
-    window.location.href =
-      "mailto:thetilakraj@gmail.com?subject=" +
-      encodedSubject +
-      "&body=" +
-      encodedEmail +
-      "%0A" +
-      encodedMessage;
-  }
+  
+    // Construct the subject and body text
+    var subject = "Message from " + name;
+    var body = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
+  
+    // Properly encode the subject and body
+    var mailtoLink = `mailto:thetilakraj@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+    // Open the mailto link in a new tab
+    var newWindow = window.open(mailtoLink, '_blank');
+  
+    // Ensure the new tab opens if allowed by the browser
+    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+      alert("Pop-up blocker might be preventing the email from opening. Please allow pop-ups.");
+    }
+  }  
 })(jQuery);

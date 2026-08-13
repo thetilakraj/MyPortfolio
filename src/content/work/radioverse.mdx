@@ -1,0 +1,50 @@
+---
+title: Radioverse
+summary: A station-first internet radio web app — curated catalogue, vinyl-inspired player, live song identification. Designed and built solo.
+pillar: products
+featured: true
+vehicle: TritSync Incorp Inc.
+domain: consumer
+role: Product design and engineering — every layer
+start: '2025-01'
+status: live
+confidentiality: public
+stack:
+  - Next.js
+  - Firebase
+  - Stripe
+  - Serwist PWA
+  - TypeScript
+links:
+  - label: listenradioverse.com
+    href: https://listenradioverse.com
+    kind: site
+outcomes:
+  - metric: Cold TTFB
+    value: 3.1s → ~0.8s
+    note: Mobile first-load hardening — min instances, gzip-negotiated catalogue.
+  - metric: Cumulative Layout Shift
+    value: 0.673 → ~0.007
+    note: Reserved loading-player console height.
+order: 1
+---
+
+Radioverse treats the **station** as the primary object, not the track. The
+promise is curated, music-only live radio discovery with no ads.
+
+## Situation
+
+_Phase 3 writes the full case study to the six-part spine: situation,
+constraints, decisions, what shipped, outcome, and what I'd change._
+
+## Constraints
+
+Solo build. Live audio cannot be faked offline, billing has to be real, and a
+catalogue assembled from third-party directories is hostile by default — dead
+streams, duplicates, and mislabelled genres.
+
+## Decisions
+
+The design system locks to one direction: a restrained physical audio
+instrument. Amber is signal-only — active station, playback state, premium
+markers — and never decoration. That single rule does most of the visual work.

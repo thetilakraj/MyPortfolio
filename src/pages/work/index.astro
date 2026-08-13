@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+
+const entries = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const pillars = [
+  { key: 'products', label: 'Products' },
+  { key: 'enterprise', label: 'Enterprise' },
+  { key: 'research', label: 'Research' },
+] as const;
+---
+
+<BaseLayout
+  title="Work — Tilak Raj"
+  description="Case studies across independent product work and a decade of enterprise SAP delivery."
+>
+  <h1 class="mb-4 font-serif text-4xl font-medium tracking-tight">Work</h1>
+
+  <p class="mb-10 max-w-prose text-ink-soft">
+    Independent products and enterprise delivery. Client work is described by
+    domain rather than by name — it lives in client systems and stays there.
+  </p>
+
+  {
+    pillars.map(({ key, label }) => {
+      const group = entries.filter((e) => e.data.pillar === key);
+      if (group.length === 0) return null;
+      return (
+        <section class="mb-12">
+          <h2 class="mb-2 font-mono text-xs uppercase tracking-widest text-ink-faint">
+            {label}
+          </h2>
+          {group.map((entry) => (
+            <WorkCard id={entry.id} {...entry.data} />
+          ))}
+        </section>
+      );
+    })
+  }
+</BaseLayout>

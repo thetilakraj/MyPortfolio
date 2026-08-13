@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+---
+
+<BaseLayout
+  title="Page not found — Tilak Raj"
+  description="That page doesn't exist."
+>
+  <h1 class="mb-4 font-serif text-4xl font-medium tracking-tight">
+    That page doesn't exist
+  </h1>
+  <p class="mb-6 max-w-prose text-ink-soft">
+    The link may be out of date. Try the work index, or head back to the start.
+  </p>
+  <p>
+    <a href={url('/work')} class="text-signal">Work</a>
+    <span class="mx-3 text-ink-faint" aria-hidden="true">&middot;</span>
+    <a href={url('/')} class="text-signal">Home</a>
+  </p>
+</BaseLayout>

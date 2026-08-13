@@ -1,0 +1,129 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+
+const period = d.end ? `${d.start} – ${d.end}` : `${d.start} – present`;
+
+const sectorLabel = d.domain
+  ? { fmcg: 'FMCG' }[d.domain] ?? d.domain[0].toUpperCase() + d.domain.slice(1)
+  : undefined;
+
+const facts = [
+  { label: 'Role', value: d.role },
+  { label: 'At', value: d.vehicle ?? d.employer },
+  { label: 'Period', value: period },
+  { label: 'Sector', value: sectorLabel },
+].filter((f) => f.value);
+---
+
+<BaseLayout title={`${d.title} — Tilak Raj`} description={d.summary}>
+  <article>
+    <header class="mb-10 border-b border-rule pb-8">
+      <h1
+        class="mb-3 font-serif text-4xl font-medium tracking-tight text-balance"
+      >
+        {d.title}
+      </h1>
+      <p class="mb-6 max-w-prose text-lg text-ink-soft">{d.summary}</p>
+
+      <dl class="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-sm">
+        {
+          facts.map((f) => (
+            <>
+              <dt class="font-mono text-xs uppercase tracking-widest text-ink-faint">
+                {f.label}
+              </dt>
+              <dd class="m-0">{f.value}</dd>
+            </>
+          ))
+        }
+      </dl>
+
+      {
+        d.stack.length > 0 && (
+          <ul class="mt-6 flex list-none flex-wrap gap-2 p-0 font-mono text-xs text-ink-faint">
+            {d.stack.map((s) => (
+              <li class="rounded bg-surface-2 px-2 py-1">{s}</li>
+            ))}
+          </ul>
+        )
+      }
+
+      {
+        d.links.length > 0 && (
+          <ul class="mt-6 flex list-none flex-wrap gap-4 p-0">
+            {d.links.map((l) => (
+              <li>
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-signal"
+                >
+                  {l.label} &nearr;
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </header>
+
+    {
+      d.outcomes.length > 0 && (
+        <section class="mb-10">
+          <h2 class="mb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
+            Outcome
+          </h2>
+          <ul class="grid list-none gap-4 p-0 sm:grid-cols-2">
+            {d.outcomes.map((o) => (
+              <li class="rounded border border-rule bg-surface p-4">
+                <p class="m-0 font-mono text-xs uppercase tracking-widest text-ink-faint">
+                  {o.metric}
+                </p>
+                <p class="m-0 font-serif text-xl tabular-nums">{o.value}</p>
+                {o.note && (
+                  <p class="m-0 mt-1 text-sm text-ink-soft">{o.note}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <div class="prose-body max-w-prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose-body :global(h2) {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    margin: 2rem 0 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-body :global(p) {
+    margin: 0 0 1rem;
+  }
+  .prose-body :global(em) {
+    color: var(--ink-soft);
+  }
+  .prose-body :global(strong) {
+    font-weight: 620;
+  }
+</style>

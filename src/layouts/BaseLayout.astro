@@ -1,0 +1,58 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { url } from '../lib/url';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Page-specific share image, relative to the site root. */
+  image?: string;
+}
+
+const { title, description, image } = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(url(image ?? '/og-default.png'), Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Tilak Raj" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={url('/favicon.ico')} sizes="any" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tilak Raj" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <slot name="head" />
+  </head>
+
+  <body class="min-h-screen">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:rounded focus:bg-signal focus:px-3 focus:py-2 focus:text-signal-ink"
+    >
+      Skip to content
+    </a>
+
+    <SiteHeader />
+
+    <main id="main" class="mx-auto max-w-4xl px-6 py-12">
+      <slot />
+    </main>
+
+    <SiteFooter />
+  </body>
+</html>

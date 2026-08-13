@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Design tokens.
+
+   Light is the complete base palette. Dark is redefined twice on purpose:
+   once behind prefers-color-scheme (guarded so an explicit light choice wins)
+   and once behind [data-theme="dark"] (so a toggle wins in both directions).
+   Never declare a colour only inside a media or [data-theme] block.
+
+   Phase 2 is a working shell. The real visual system lands in phase 3.
+--------------------------------------------------------------------------- */
+:root {
+  --paper: #edf0f4;
+  --surface: #ffffff;
+  --surface-2: #e4e9f0;
+  --ink: #0f151c;
+  --ink-soft: #56616f;
+  --ink-faint: #8592a1;
+  --rule: #d2dae4;
+
+  /* Signal-only accent: state and emphasis, never decoration. */
+  --signal: #a25c09;
+  --signal-ink: #ffffff;
+
+  --font-serif: ui-serif, 'New York', 'Iowan Old Style', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI',
+    system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #0d1219;
+    --surface: #151b23;
+    --surface-2: #1d242e;
+    --ink: #e3e9f0;
+    --ink-soft: #96a3b2;
+    --ink-faint: #6b7887;
+    --rule: #27313d;
+    --signal: #e9a23b;
+    --signal-ink: #0d1219;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #0d1219;
+  --surface: #151b23;
+  --surface-2: #1d242e;
+  --ink: #e3e9f0;
+  --ink-soft: #96a3b2;
+  --ink-faint: #6b7887;
+  --rule: #27313d;
+  --signal: #e9a23b;
+  --signal-ink: #0d1219;
+}
+
+/* Expose the runtime variables to Tailwind utilities (bg-paper, text-ink, …). */
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  /* The host paints its own ground behind the page; never leave this transparent. */
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

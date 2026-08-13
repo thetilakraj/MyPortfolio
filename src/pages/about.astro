@@ -1,0 +1,120 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+const timeline = [
+  {
+    when: 'Sep 2024 – present',
+    what: 'Chicken Farmers of Ontario',
+    detail: 'Technical Lead — Toronto',
+  },
+  {
+    when: 'Apr 2022 – Sep 2024',
+    what: 'Chicken Farmers of Ontario',
+    detail: 'Senior Software Developer — Toronto',
+  },
+  {
+    when: 'Oct 2021 – Mar 2022',
+    what: 'OCR Solutions / Baarez Technology Solutions',
+    detail: 'SAP UI5 Fiori Consultant — Doha, Qatar',
+  },
+  {
+    when: '2021',
+    what: 'Humber College',
+    detail: 'Postgraduate, User Experience (UX) Design — Toronto',
+  },
+  {
+    when: 'Jan – Jul 2021',
+    what: 'Wipro',
+    detail: 'Associate Consultant — Bengaluru',
+  },
+  {
+    when: 'May 2019 – Dec 2020',
+    what: 'LTIMindtree',
+    detail: 'Associate Consultant → Senior Consultant — Bengaluru',
+  },
+  {
+    when: 'Oct 2015 – Mar 2019',
+    what: 'Accenture',
+    detail:
+      'Associate Software Engineer → Application Development Analyst — Bengaluru',
+  },
+];
+
+const certifications = [
+  'SAP Certified Development Associate — SAP Fiori Application Developer',
+  'SAP Certified Development Associate — SAP HANA 2.0 (SPS04)',
+  'Intelligent Enterprise User Experience with SAP Fiori 3',
+  'SAP Fiori Overview: Design, Develop and Deploy',
+  'Building Applications with SAP Cloud Application Programming Model',
+];
+---
+
+<BaseLayout
+  title="About — Tilak Raj"
+  description="SAP BTP Lead Consultant and product designer in Toronto, with ten years across enterprise SAP delivery and independent product work."
+>
+  <h1 class="mb-6 font-serif text-4xl font-medium tracking-tight">About</h1>
+
+  <p class="mb-4 max-w-prose text-lg text-ink-soft">
+    I'm an SAP BTP Lead Consultant, UI/UX designer, and app developer with over
+    ten years in the industry. Based in Toronto, with a background in electrical
+    and electronics engineering and a postgraduate in UX design.
+  </p>
+
+  <p class="mb-10 max-w-prose text-ink-soft">
+    My work sits on both sides of a line most people pick one of: enterprise
+    delivery inside somebody else's design language and governance, and
+    independent products where I write the constraints myself.
+  </p>
+
+  <p class="mb-16">
+    <a
+      href={url('/Tilak-Raj-Resume-2026.pdf')}
+      class="inline-block rounded bg-signal px-4 py-2 text-signal-ink no-underline"
+    >
+      Download résumé (PDF)
+    </a>
+  </p>
+
+  <section class="mb-16">
+    <h2 class="mb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
+      Timeline
+    </h2>
+    <ul class="list-none p-0">
+      {
+        timeline.map((row) => (
+          <li class="grid gap-x-6 border-t border-rule py-3 sm:grid-cols-[11rem_1fr]">
+            <span class="font-mono text-xs tabular-nums text-ink-faint">
+              {row.when}
+            </span>
+            <span>
+              <strong class="font-semibold">{row.what}</strong>
+              <span class="block text-sm text-ink-soft">{row.detail}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="mb-16">
+    <h2 class="mb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
+      Certifications
+    </h2>
+    <ul class="list-none p-0 text-ink-soft">
+      {
+        certifications.map((c) => (
+          <li class="border-t border-rule py-2 text-sm">{c}</li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="mb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
+      Recognition
+    </h2>
+    <p class="text-ink-soft">Accenture Excellence Award.</p>
+  </section>
+</BaseLayout>

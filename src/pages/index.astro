@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WorkCard from '../components/WorkCard.astro';
+import { url } from '../lib/url';
+
+const featured = (await getCollection('work'))
+  .filter((entry) => entry.data.featured)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Tilak Raj — SAP BTP Lead Consultant & Product Designer"
+  description="Ten years designing and building software inside hard constraints — enterprise SAP delivery, and independent consumer products."
+>
+  <section class="mb-16">
+    <h1 class="mb-5 max-w-3xl font-serif text-4xl font-medium tracking-tight text-balance sm:text-5xl">
+      Ten years shipping software inside hard constraints — first someone
+      else's, now also my own.
+    </h1>
+
+    <p class="mb-4 max-w-prose text-lg text-ink-soft">
+      By day I lead the technical delivery of an enterprise SAP BTP platform
+      toward production launch, across multiple vendor teams. Nights and
+      weekends I design, build, and ship consumer products end to end through
+      TritSync Incorp Inc.
+    </p>
+
+    <p class="max-w-prose text-ink-soft">
+      Based in Toronto. Currently Technical Lead at Chicken Farmers of Ontario.
+    </p>
+  </section>
+
+  <section>
+    <h2
+      class="mb-2 font-mono text-xs uppercase tracking-widest text-ink-faint"
+    >
+      Selected work
+    </h2>
+
+    {featured.map((entry) => <WorkCard id={entry.id} {...entry.data} />)}
+
+    <p class="mt-8">
+      <a href={url('/work')} class="text-signal">All work &rarr;</a>
+    </p>
+  </section>
+</BaseLayout>

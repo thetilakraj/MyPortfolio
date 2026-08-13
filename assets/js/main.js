@@ -5,8 +5,6 @@
     $header = $("#header"),
     $nav = $("#nav"),
     $main = $("#main"),
-    $msgSubmit = $("#msgSubmit"),
-    $frame = $("#frame"),
     $navPanelToggle,
     $navPanel,
     $navPanelInner;
@@ -214,46 +212,4 @@
       });
     });
   }
-  //send email
-  // $msgSubmit.click(function sendEmail() {
-
-  // });
-
-  function sendEmail(event) {
-    event.preventDefault(); // Prevent form submission
-  
-    // Get the values of the form fields
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var message = document.getElementById("message").value;
-  
-    // Validate the form fields
-    if (!name) {
-      alert("Please enter your name.");
-      return;
-    }
-    if (!email || !email.includes("@")) {
-      alert("Please enter a valid email address.");
-      return;
-    }
-    if (!message) {
-      alert("Please enter a message.");
-      return;
-    }
-  
-    // Construct the subject and body text
-    var subject = "Message from " + name;
-    var body = `Name: ${name}\nEmail: ${email}\nMessage: ${message}`;
-  
-    // Properly encode the subject and body
-    var mailtoLink = `mailto:thetilakraj@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  
-    // Open the mailto link in a new tab
-    var newWindow = window.open(mailtoLink, '_blank');
-  
-    // Ensure the new tab opens if allowed by the browser
-    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-      alert("Pop-up blocker might be preventing the email from opening. Please allow pop-ups.");
-    }
-  }  
 })(jQuery);

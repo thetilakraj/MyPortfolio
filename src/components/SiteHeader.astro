@@ -4,7 +4,6 @@ import { url, isCurrent } from '../lib/url';
 const pathname = Astro.url.pathname;
 
 const links = [
-  { href: '/', label: 'Home' },
   { href: '/work', label: 'Work' },
   { href: '/about', label: 'About' },
 ];
@@ -12,17 +11,17 @@ const links = [
 
 <header class="border-b border-rule">
   <div
-    class="mx-auto flex max-w-4xl flex-wrap items-baseline justify-between gap-4 px-6 py-5"
+    class="mx-auto flex max-w-5xl flex-wrap items-baseline justify-between gap-x-8 gap-y-3 px-6 py-5"
   >
-    <a
-      href={url('/')}
-      class="font-serif text-lg font-medium tracking-tight no-underline"
-    >
-      Tilak Raj
+    <a href={url('/')} class="group no-underline">
+      <span class="font-serif text-[1.0625rem] font-medium tracking-tight"
+        >Tilak Raj</span
+      >
+      <span class="label ml-3 hidden sm:inline">Toronto</span>
     </a>
 
     <nav aria-label="Primary">
-      <ul class="flex list-none gap-6 p-0 text-sm">
+      <ul class="flex list-none items-baseline gap-7 p-0 text-sm">
         {
           links.map(({ href, label }) => {
             const current = isCurrent(href, pathname);
@@ -32,7 +31,7 @@ const links = [
                   href={url(href)}
                   aria-current={current ? 'page' : undefined}
                   class:list={[
-                    'no-underline hover:text-signal',
+                    'no-underline transition-colors hover:text-signal',
                     current ? 'text-signal' : 'text-ink-soft',
                   ]}
                 >

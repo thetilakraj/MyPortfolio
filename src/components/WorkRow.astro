@@ -1,0 +1,81 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  id: string;
+  title: string;
+  summary: string;
+  status: string;
+  employer?: string;
+  vehicle?: string;
+  start: string;
+  end?: string;
+  stack?: string[];
+}
+
+const {
+  id,
+  title,
+  summary,
+  status,
+  employer,
+  vehicle,
+  start,
+  end,
+  stack = [],
+} = Astro.props;
+
+const statusLabel =
+  {
+    live: 'Live',
+    'in-development': 'In development',
+    'in-progress': 'In progress',
+    delivered: 'Delivered',
+    archived: 'Archived',
+  }[status] ?? status;
+
+const year = (s: string) => s.slice(0, 4);
+const period = end
+  ? year(start) === year(end)
+    ? year(start)
+    : `${year(start)}–${year(end)}`
+  : `${year(start)}–`;
+
+const attribution = vehicle ?? employer;
+---
+
+<article class="border-t border-rule">
+  <a
+    href={url(`/work/${id}`)}
+    class="group grid gap-x-8 gap-y-2 py-7 no-underline sm:grid-cols-[7rem_1fr]"
+  >
+    <div class="flex flex-col gap-1">
+      <span class="label tabular-nums">{period}</span>
+      <span class="label text-signal">{statusLabel}</span>
+    </div>
+
+    <div>
+      <h3
+        class="title mb-1.5 text-[1.5rem] text-ink transition-colors group-hover:text-signal"
+      >
+        {title}
+      </h3>
+
+      <p class="mb-3 max-w-[38rem] text-ink-soft">{summary}</p>
+
+      <div
+        class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.6875rem] text-ink-faint"
+      >
+        {attribution && <span>{attribution}</span>}
+        {
+          attribution && stack.length > 0 && (
+            <span aria-hidden="true" class="text-rule">
+              |
+            </span>
+          )
+        }
+        {stack.length > 0 && <span>{stack.join(' · ')}</span>}
+      </div>
+    </div>
+  </a>
+</article>

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WorkCard from '../components/WorkCard.astro';
+import WorkRow from '../components/WorkRow.astro';
 import { url } from '../lib/url';
 
 const featured = (await getCollection('work'))
@@ -11,37 +11,60 @@ const featured = (await getCollection('work'))
 
 <BaseLayout
   title="Tilak Raj — SAP BTP Lead Consultant & Product Designer"
-  description="Ten years designing and building software inside hard constraints — enterprise SAP delivery, and independent consumer products."
+  description="Ten years designing and building software inside hard constraints — enterprise SAP delivery by day, independent consumer products by night."
 >
-  <section class="mb-16">
-    <h1 class="mb-5 max-w-3xl font-serif text-4xl font-medium tracking-tight text-balance sm:text-5xl">
-      Ten years shipping software inside hard constraints — first someone
-      else's, now also my own.
+  <!-- The claim. Left-aligned, no photo, no centred hero. -->
+  <section class="pt-6 pb-20 sm:pt-14">
+    <h1 class="display max-w-[19ch] text-[2.6rem] sm:text-[3.5rem]">
+      Ten years shipping software inside hard constraints.
     </h1>
-
-    <p class="mb-4 max-w-prose text-lg text-ink-soft">
-      By day I lead the technical delivery of an enterprise SAP BTP platform
-      toward production launch, across multiple vendor teams. Nights and
-      weekends I design, build, and ship consumer products end to end through
-      TritSync Incorp Inc.
-    </p>
-
-    <p class="max-w-prose text-ink-soft">
-      Based in Toronto. Currently Technical Lead at Chicken Farmers of Ontario.
+    <p class="lede mt-6 max-w-[46ch]">
+      First someone else's. Now also my own.
     </p>
   </section>
 
-  <section>
-    <h2
-      class="mb-2 font-mono text-xs uppercase tracking-widest text-ink-faint"
-    >
-      Selected work
-    </h2>
+  <!-- The two pillars, expressed structurally as two columns. -->
+  <section class="grid gap-x-12 gap-y-10 border-t border-rule pt-10 sm:grid-cols-2">
+    <div>
+      <p class="label mb-3">By day</p>
+      <p class="max-w-[38ch] text-ink">
+        I lead the technical delivery of an enterprise SAP BTP platform toward
+        production launch, across multiple vendor teams — readiness, code
+        review, QA strategy, and the launch itself.
+      </p>
+      <p class="mt-3 text-sm text-ink-soft">
+        Technical Lead, Chicken Farmers of Ontario
+      </p>
+    </div>
 
-    {featured.map((entry) => <WorkCard id={entry.id} {...entry.data} />)}
+    <div>
+      <p class="label mb-3">Nights and weekends</p>
+      <p class="max-w-[38ch] text-ink">
+        I design, build, and ship consumer products end to end — research,
+        design system, engineering, billing, release. No handoffs, because
+        there's no one to hand off to.
+      </p>
+      <p class="mt-3 text-sm text-ink-soft">TritSync Incorp Inc.</p>
+    </div>
+  </section>
 
-    <p class="mt-8">
-      <a href={url('/work')} class="text-signal">All work &rarr;</a>
+  <section class="mt-14 border-t border-rule pt-4">
+    <p class="max-w-[58ch] text-ink-soft">
+      The discipline is the same on both sides. Enterprise work hands you a
+      design language, hard business rules, and no permission to freelance. I
+      spent a decade delivering inside that — then wrote stricter constraints
+      for myself when nobody was making me.
+    </p>
+  </section>
+
+  <!-- Selected work as an index, not a card grid. -->
+  <section class="mt-24">
+    <h2 class="label mb-2">Selected work</h2>
+    {featured.map((entry) => <WorkRow id={entry.id} {...entry.data} />)}
+    <p class="mt-8 border-t border-rule pt-6">
+      <a href={url('/work')} class="text-signal no-underline hover:underline"
+        >All work &rarr;</a
+      >
     </p>
   </section>
 </BaseLayout>

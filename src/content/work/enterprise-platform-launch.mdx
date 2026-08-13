@@ -1,6 +1,6 @@
 ---
 title: Leading an enterprise platform to launch
-summary: Technical lead on a multi-vendor SAP BTP delivery — readiness ownership, code review, QA strategy, and production launch.
+summary: Technical lead on a multi-vendor SAP BTP delivery — operational readiness, vendor code review, QA strategy across business domains, and the production launch itself.
 pillar: enterprise
 featured: true
 employer: Chicken Farmers of Ontario
@@ -15,21 +15,120 @@ stack:
   - SAP CAP
   - SAP Gateway
   - SAP Build Work Zone
-order: 2
+order: 3
 ---
 
-Leading the technical delivery of an enterprise SAP BTP platform toward
-production launch, across multiple vendor teams.
+Since September 2024 I've been technical lead on the delivery of an enterprise
+SAP BTP platform toward production launch, working across multiple vendor
+teams.
+
+_This case study describes how the delivery is run, not what the system
+contains. The platform is internal, so there are no screenshots, no
+architecture detail, and no product name here. What follows is the part that
+transfers anyway: the practice._
 
 ## Situation
 
-_Phase 3 writes the full case study. No platform name, no screenshots, no
-architecture internals — the work is described through delivery practice._
+I joined the organisation in 2022 as a senior software developer and moved into
+the technical lead role in 2024, as the programme shifted from building toward
+launching.
 
-## Scope
+That transition changes the job completely. Writing the code is no longer the
+constraint. The constraints become whether work delivered by parties you don't
+manage meets a standard you're accountable for, whether the environment it
+lands in is actually ready, and whether anyone can tell the difference before
+production does.
 
-Operational readiness ownership. Vendor SAPUI5 and CAP code review. Production
-environment setup and configuration. An implementation plan spanning
-pre-implementation, smoke test, and post-launch support. QA across all business
-domains for both BTP and Gateway services. BTP security and identity review.
-Technical specification authorship.
+## Constraints
+
+**Multi-vendor delivery.** Significant development is performed by external
+vendors. I review it and I'm accountable for it, but I don't own the teams
+producing it — influence has to run through standards, review, and evidence
+rather than direct authority.
+
+**Multi-party environment.** Developers, system analysts, and subject-matter
+experts across several organisations, each with their own delivery cadence and
+their own definition of done.
+
+**A launch date meets a live business.** Post-launch defects are not tickets in
+a backlog; they're an operational problem for the people who depend on the
+platform. Severity triage has to be agreed before it's needed, not during the
+first incident.
+
+**Breadth over depth, deliberately.** QA responsibility spans all business
+domains across both the BTP layer and the Gateway services. No single person
+can hold deep domain expertise across all of it, so the coverage strategy has
+to compensate for that rather than pretend otherwise.
+
+## Decisions
+
+**Standards before review, review before merge.** Code review across vendor
+SAPUI5 and CAP work is only leverage if the standard exists in writing first.
+Reviewing against an unstated preference produces argument; reviewing against
+an agreed coding standard produces a fix. Best practices and coding standards
+are applied through daily stand-ups with the application vendors and a weekly
+technical meeting with the services vendors — separate cadences, because the
+integration questions and the service questions fail differently.
+
+**Architecture alignment is reviewed, not assumed.** Vendor architecture and
+technology stack decisions get reviewed against the target explicitly, early,
+rather than being discovered at integration. The same applies to BTP setup,
+identity and security configuration, and repository practice — each is a
+review surface with a named owner rather than an assumption.
+
+**One implementation plan covering the unglamorous parts.** Pre-implementation
+activities, the implementation itself, smoke test, and post-implementation
+support are planned as one artifact. Most launch pain I've seen comes from
+treating the first and last of those as someone else's problem.
+
+**Write the specification down.** Authoring the Gateway and ECC technical
+specification documents is not administrative overhead — it's the mechanism by
+which a multi-party team agrees what "correct" means before anyone builds
+against it.
+
+**Risks get named while they're cheap.** Reviewing vendor setup across BTP,
+security, identity and version control surfaces risk while it's still a
+conversation instead of an incident.
+
+## What shipped
+
+Operational readiness ownership for the platform, and technical lead on the
+production launch.
+
+Production environment setup and configuration. An implementation plan spanning
+pre-implementation through post-launch support, with severity-based resolution
+timelines agreed in advance. Vendor code review across SAPUI5 and CAP.
+Architecture and stack alignment review with vendors. QA across all business
+domains for both BTP and Gateway services, with high and medium defects
+resolved inside the planned window. Technical specification authorship for
+Gateway and ECC. Review of vendor BTP setup, identity and security
+configuration, and repository practice. Ongoing production releases, Jira
+delivery, and after-hours support.
+
+## Outcome
+
+The programme is in flight, so the honest status is in-progress rather than
+delivered. Launch readiness is the current work.
+
+What I can say concretely: the review cadence catches integration problems at
+review rather than at integration, and the specification documents have
+repeatedly turned "we assumed you meant" conversations into short ones. Those
+are process outcomes rather than headline metrics, which is what this stage of
+a programme actually produces.
+
+## What I'd change
+
+**I set up the review cadence later than I should have.** The daily and weekly
+rhythms with the two vendor groups now do most of the quality work, and every
+week they didn't exist was a week defects travelled further before being seen.
+On a future programme that's a week-one artifact, not a response to friction.
+
+**Breadth-first QA needs tooling earlier.** Owning QA across every business
+domain is manageable through discipline for a while and then abruptly isn't.
+Regression coverage should scale with domain count from the start rather than
+being reinforced once manual coverage strains.
+
+**Specifications should be versioned like code.** They're treated as
+deliverables and they behave like source — they drift, they need review, and
+disagreement about which version is current is expensive. I'd put them under
+the same review discipline as the code they govern.

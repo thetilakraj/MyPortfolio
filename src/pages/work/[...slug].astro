@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { url } from '../../lib/url';
 
 export async function getStaticPaths() {
   const entries = await getCollection('work');
@@ -14,116 +15,131 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 
-const period = d.end ? `${d.start} – ${d.end}` : `${d.start} – present`;
+const month = (s: string) => {
+  const [y, m] = s.split('-');
+  if (!m) return y;
+  const name = new Date(Number(y), Number(m) - 1).toLocaleString('en', {
+    month: 'short',
+  });
+  return `${name} ${y}`;
+};
 
 const sectorLabel = d.domain
-  ? { fmcg: 'FMCG' }[d.domain] ?? d.domain[0].toUpperCase() + d.domain.slice(1)
+  ? ({ fmcg: 'FMCG' } as Record<string, string>)[d.domain] ??
+    d.domain[0].toUpperCase() + d.domain.slice(1)
   : undefined;
+
+const statusLabel =
+  {
+    live: 'Live in production',
+    'in-development': 'In development',
+    'in-progress': 'In progress',
+    delivered: 'Delivered',
+    archived: 'Archived',
+  }[d.status] ?? d.status;
 
 const facts = [
   { label: 'Role', value: d.role },
   { label: 'At', value: d.vehicle ?? d.employer },
-  { label: 'Period', value: period },
   { label: 'Sector', value: sectorLabel },
-].filter((f) => f.value);
+  {
+    label: 'Period',
+    value: d.end ? `${month(d.start)} – ${month(d.end)}` : `${month(d.start)} – present`,
+  },
+  { label: 'Status', value: statusLabel },
+].filter((f): f is { label: string; value: string } => Boolean(f.value));
 ---
 
 <BaseLayout title={`${d.title} — Tilak Raj`} description={d.summary}>
   <article>
-    <header class="mb-10 border-b border-rule pb-8">
-      <h1
-        class="mb-3 font-serif text-4xl font-medium tracking-tight text-balance"
-      >
+    <header class="pt-6 pb-10">
+      <p class="label mb-4">
+        <a href={url('/work')} class="text-ink-faint no-underline hover:text-signal"
+          >&larr; Work</a
+        >
+      </p>
+      <h1 class="display max-w-[20ch] text-[2.3rem] sm:text-[3rem]">
         {d.title}
       </h1>
-      <p class="mb-6 max-w-prose text-lg text-ink-soft">{d.summary}</p>
-
-      <dl class="grid grid-cols-[max-content_1fr] gap-x-6 gap-y-2 text-sm">
-        {
-          facts.map((f) => (
-            <>
-              <dt class="font-mono text-xs uppercase tracking-widest text-ink-faint">
-                {f.label}
-              </dt>
-              <dd class="m-0">{f.value}</dd>
-            </>
-          ))
-        }
-      </dl>
-
-      {
-        d.stack.length > 0 && (
-          <ul class="mt-6 flex list-none flex-wrap gap-2 p-0 font-mono text-xs text-ink-faint">
-            {d.stack.map((s) => (
-              <li class="rounded bg-surface-2 px-2 py-1">{s}</li>
-            ))}
-          </ul>
-        )
-      }
-
-      {
-        d.links.length > 0 && (
-          <ul class="mt-6 flex list-none flex-wrap gap-4 p-0">
-            {d.links.map((l) => (
-              <li>
-                <a
-                  href={l.href}
-                  target="_blank"
-                  rel="noopener"
-                  class="text-signal"
-                >
-                  {l.label} &nearr;
-                </a>
-              </li>
-            ))}
-          </ul>
-        )
-      }
+      <p class="lede mt-5 max-w-[52ch]">{d.summary}</p>
     </header>
 
-    {
-      d.outcomes.length > 0 && (
-        <section class="mb-10">
-          <h2 class="mb-4 font-mono text-xs uppercase tracking-widest text-ink-faint">
-            Outcome
-          </h2>
-          <ul class="grid list-none gap-4 p-0 sm:grid-cols-2">
-            {d.outcomes.map((o) => (
-              <li class="rounded border border-rule bg-surface p-4">
-                <p class="m-0 font-mono text-xs uppercase tracking-widest text-ink-faint">
-                  {o.metric}
-                </p>
-                <p class="m-0 font-serif text-xl tabular-nums">{o.value}</p>
-                {o.note && (
-                  <p class="m-0 mt-1 text-sm text-ink-soft">{o.note}</p>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+    <!-- Metadata rail beside the prose on wide screens; stacked below it on
+         narrow ones. The rail is where identifiers live — mono, quiet. -->
+    <div class="grid gap-x-16 gap-y-10 lg:grid-cols-[13rem_1fr]">
+      <aside class="lg:sticky lg:top-8 lg:self-start">
+        <dl class="m-0 border-t border-rule">
+          {
+            facts.map((f) => (
+              <div class="border-b border-rule-soft py-2.5">
+                <dt class="label">{f.label}</dt>
+                <dd class="m-0 mt-0.5 text-sm">{f.value}</dd>
+              </div>
+            ))
+          }
+        </dl>
 
-    <div class="prose-body max-w-prose">
-      <Content />
+        {
+          d.stack.length > 0 && (
+            <div class="mt-6">
+              <p class="label mb-2">Built with</p>
+              <ul class="m-0 flex list-none flex-wrap gap-1.5 p-0">
+                {d.stack.map((s) => (
+                  <li class="rounded-[3px] bg-surface-2 px-2 py-1 font-mono text-[0.6875rem] text-ink-soft">
+                    {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        {
+          d.links.length > 0 && (
+            <ul class="mt-6 flex list-none flex-col gap-2 p-0">
+              {d.links.map((l) => (
+                <li>
+                  <a
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener"
+                    class="text-sm text-signal no-underline hover:underline"
+                  >
+                    {l.label} &nearr;
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+      </aside>
+
+      <div>
+        {
+          d.outcomes.length > 0 && (
+            <section class="mb-10">
+              <h2 class="label mb-3">Measured</h2>
+              <ul class="grid list-none gap-px overflow-hidden rounded-[4px] border border-rule bg-rule p-0 sm:grid-cols-2">
+                {d.outcomes.map((o) => (
+                  <li class="bg-surface p-4">
+                    <p class="label m-0">{o.metric}</p>
+                    <p class="m-0 mt-1 font-serif text-[1.35rem] tabular-nums">
+                      {o.value}
+                    </p>
+                    {o.note && (
+                      <p class="m-0 mt-1.5 text-sm text-ink-soft">{o.note}</p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        <div class="spine">
+          <Content />
+        </div>
+      </div>
     </div>
   </article>
 </BaseLayout>
-
-<style>
-  .prose-body :global(h2) {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    margin: 2rem 0 0.75rem;
-    letter-spacing: -0.01em;
-  }
-  .prose-body :global(p) {
-    margin: 0 0 1rem;
-  }
-  .prose-body :global(em) {
-    color: var(--ink-soft);
-  }
-  .prose-body :global(strong) {
-    font-weight: 620;
-  }
-</style>

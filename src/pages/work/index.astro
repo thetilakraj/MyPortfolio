@@ -1,16 +1,28 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import WorkCard from '../../components/WorkCard.astro';
+import WorkRow from '../../components/WorkRow.astro';
 
 const entries = (await getCollection('work')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
 const pillars = [
-  { key: 'products', label: 'Products' },
-  { key: 'enterprise', label: 'Enterprise' },
-  { key: 'research', label: 'Research' },
+  {
+    key: 'products',
+    label: 'Products',
+    note: 'Designed, built, and shipped end to end through TritSync Incorp Inc.',
+  },
+  {
+    key: 'enterprise',
+    label: 'Enterprise',
+    note: 'Delivery inside somebody else’s design language and governance.',
+  },
+  {
+    key: 'research',
+    label: 'Research',
+    note: 'Method work from the UX postgraduate at Humber College.',
+  },
 ] as const;
 ---
 
@@ -18,24 +30,30 @@ const pillars = [
   title="Work — Tilak Raj"
   description="Case studies across independent product work and a decade of enterprise SAP delivery."
 >
-  <h1 class="mb-4 font-serif text-4xl font-medium tracking-tight">Work</h1>
-
-  <p class="mb-10 max-w-prose text-ink-soft">
-    Independent products and enterprise delivery. Client work is described by
-    domain rather than by name — it lives in client systems and stays there.
-  </p>
+  <header class="pt-6 pb-14">
+    <h1 class="display text-[2.6rem] sm:text-[3.25rem]">Work</h1>
+    <p class="lede mt-5 max-w-[52ch]">
+      Independent products, and a decade of enterprise delivery.
+    </p>
+    <p class="mt-4 max-w-[56ch] text-sm text-ink-soft">
+      Client work is described by sector rather than by name. It lives in client
+      systems and stays there — so the enterprise entries carry no screenshots
+      and no system detail.
+    </p>
+  </header>
 
   {
-    pillars.map(({ key, label }) => {
+    pillars.map(({ key, label, note }) => {
       const group = entries.filter((e) => e.data.pillar === key);
       if (group.length === 0) return null;
       return (
-        <section class="mb-12">
-          <h2 class="mb-2 font-mono text-xs uppercase tracking-widest text-ink-faint">
-            {label}
-          </h2>
+        <section class="mb-16">
+          <div class="mb-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <h2 class="label">{label}</h2>
+            <p class="m-0 text-sm text-ink-faint">{note}</p>
+          </div>
           {group.map((entry) => (
-            <WorkCard id={entry.id} {...entry.data} />
+            <WorkRow id={entry.id} {...entry.data} />
           ))}
         </section>
       );

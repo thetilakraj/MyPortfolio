@@ -1,0 +1,68 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkRow from '../../components/WorkRow.astro';
+import CapabilityIndex from '../../components/CapabilityIndex.astro';
+
+const entries = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const pillars = [
+  {
+    key: 'products',
+    label: 'Products',
+    note: 'Designed, built, and shipped end to end through TritSync Incorp Inc.',
+  },
+  {
+    key: 'enterprise',
+    label: 'Enterprise',
+    note: 'Delivery inside somebody else’s design language and governance.',
+  },
+  {
+    key: 'research',
+    label: 'Research',
+    note: 'Method work from the UX postgraduate at Humber College.',
+  },
+] as const;
+---
+
+<BaseLayout
+  title="Work — Tilak Raj"
+  description="Case studies across independent product work and a decade of enterprise SAP delivery."
+>
+  <header class="bloom pb-16">
+    <p class="eyebrow mb-6">Case studies</p>
+    <h1 class="display display-lg">Work</h1>
+    <p class="lede mt-7 max-w-[46ch]">
+      Independent products, and a decade of enterprise delivery.
+    </p>
+    <p class="mt-6 max-w-[58ch] text-[0.95rem] leading-[1.75] text-muted">
+      Client work is described by sector rather than by name. It lives in client
+      systems and stays there — so the enterprise entries carry no screenshots
+      and no system detail.
+    </p>
+  </header>
+
+  {
+    pillars.map(({ key, label, note }) => {
+      const group = entries.filter((e) => e.data.pillar === key);
+      if (group.length === 0) return null;
+      return (
+        <section class="mb-20">
+          <div class="mb-6 border-t border-rule pt-6">
+            <h2 class="display display-md mb-1">{label}</h2>
+            <p class="m-0 text-sm italic text-muted">{note}</p>
+          </div>
+          <div class="grid gap-5">
+            {group.map((entry) => (
+              <WorkRow id={entry.id} {...entry.data} />
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+
+  <CapabilityIndex />
+</BaseLayout>

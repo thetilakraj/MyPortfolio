@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+
+import accenture from '../assets/logos/accenture.png';
+import ltimindtree from '../assets/logos/ltimindtree.png';
+import wipro from '../assets/logos/wipro.svg';
+import baariz from '../assets/logos/baariz.png';
+import cfo from '../assets/logos/cfo.svg';
+
+/**
+ * Employer marks, sized to a shared optical box rather than a shared pixel
+ * width — logos have wildly different aspect ratios, so matching raw width
+ * makes the wide ones dominate. A fixed max-height plus a fixed cell does it.
+ */
+const employers = [
+  { name: 'Accenture', logo: accenture, years: '2015–2019' },
+  { name: 'LTIMindtree', logo: ltimindtree, years: '2019–2020' },
+  { name: 'Wipro', logo: wipro, years: '2021' },
+  { name: 'Baariz', logo: baariz, years: '2021–2022' },
+  { name: 'Chicken Farmers of Ontario', logo: cfo, years: '2022–' },
+];
+---
+
+<ul
+  class="m-0 grid list-none grid-cols-2 gap-px overflow-hidden rounded-[8px] border border-rule bg-rule p-0 sm:grid-cols-3 lg:grid-cols-5"
+>
+  {
+    employers.map((e) => (
+      <li class="flex flex-col items-center justify-between gap-4 bg-surface px-4 py-7">
+        <div class="flex h-12 w-full items-center justify-center">
+          <Image
+            src={e.logo}
+            alt={`${e.name} logo`}
+            widths={[160, 320]}
+            sizes="160px"
+            class="max-h-12 w-auto max-w-[7.5rem] object-contain"
+          />
+        </div>
+
+        <div class="text-center">
+          <p class="m-0 font-display text-[0.7rem] font-semibold uppercase leading-tight tracking-[0.12em] text-plum">
+            {e.name}
+          </p>
+          <p class="m-0 mt-1 font-display text-[0.65rem] font-semibold uppercase tracking-[0.18em] tabular-nums text-faint">
+            {e.years}
+          </p>
+        </div>
+      </li>
+    ))
+  }
+</ul>

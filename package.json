@@ -1,0 +1,29 @@
+{
+  "name": "thetilakraj-portfolio",
+  "version": "2.0.0",
+  "description": "Tilak Raj's portfolio — thetilakraj.github.io/MyPortfolio",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thetilakraj/MyPortfolio.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thetilakraj/MyPortfolio/issues"
+  },
+  "homepage": "https://github.com/thetilakraj/MyPortfolio#readme",
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.5",
+    "@astrojs/sitemap": "^3.7.3",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.1",
+    "tailwindcss": "^4.3.3"
+  },
+  "type": "module",
+  "private": true
+}

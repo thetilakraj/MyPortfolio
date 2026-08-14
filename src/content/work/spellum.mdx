@@ -1,0 +1,151 @@
+---
+title: Spellum
+summary: An offline-first spelling app for adults and ESL learners that measures transfer to unseen words instead of rewarding word-completion volume.
+pillar: products
+featured: true
+vehicle: TritSync Incorp Inc.
+domain: consumer
+role: Product architecture, design system, iOS engineering
+start: '2025-06'
+status: in-development
+confidentiality: public
+stack:
+  - Swift
+  - SwiftUI
+  - StoreKit
+  - OKLCH
+  - Display P3
+order: 2
+---
+
+Spellum teaches reusable spelling **patterns** and then checks whether they
+transferred to words the learner has never seen. That single measurement choice
+determines nearly everything else in the product.
+
+## Situation
+
+Spelling apps overwhelmingly measure the wrong thing. They count words
+completed, award streaks for showing up, and let a learner grind a familiar
+list to a high score without ever demonstrating they can spell something new.
+The number goes up; the skill may not.
+
+That's a comfortable design because completion volume is easy to measure, easy
+to gamify, and correlates with engagement metrics. It's also why someone can
+spend three months in an app and still freeze on an unfamiliar word.
+
+The product question I wanted to answer: what does it look like if the app only
+claims progress it can actually evidence?
+
+## Constraints
+
+**The honest metric is the hard one.** Measuring transfer means holding back
+unseen words as probes, which costs session time that could have gone to
+practice, and produces slower, less flattering progress curves.
+
+**Offline-first, for real.** The learners I care about — adults and ESL
+learners, often practising in transit — cannot depend on connectivity. Every
+learning decision has to be computable on-device from persisted state.
+
+**No claims without evidence.** If the app asserts "you've mastered this
+pattern," that has to be traceable to reviewed content and observed learner
+behaviour, not to a heuristic that happened to fire.
+
+**Accessibility is a correctness constraint.** A spelling app that conveys
+correctness through colour alone is broken for a meaningful share of its users.
+
+## Decisions
+
+**Written authority, checksum-verified.** Implementation follows a fixed
+precedence chain: Product Knowledge Architecture, then the Core Learning Loop
+UX Brief, then the design response, then SwiftUI. A verification script
+checksums the authority documents. The design response resolves the brief
+visually and is explicitly not allowed to change product scope or learning
+policy.
+
+This sounds heavy for a solo project. It is the reason the product still has a
+coherent thesis after twelve build phases.
+
+**Fail closed, everywhere.** Corpus schema v4 authorises calibration and
+ordinary practice separately, and both refuse to run when their explicit
+authoring flag is absent. Incomplete reviewed content leaves practice
+unavailable rather than degrading into something unreviewed. Distribution
+policy files keep release gated until reviewed evidence exists. Debug builds
+expose deterministic screen fixtures; TestFlight and App Store builds never
+ship them.
+
+**Evidence accumulates before it speaks.** Diagnostic relationships need to be
+reviewed and uniquely mapped before they generate evidence at all, and then
+confirm only on a second independent observation. Missing or ambiguous mappings
+stay unclassified rather than guessing. A pattern insight is only offered when
+two distinct words from the learner's own history plus a reviewed authored
+explanation support it.
+
+**Endings are designed, not defaulted.** Every session persists an unused
+high-confidence final item plus deterministic alternatives, so a session that
+goes badly at the end can still close on something the learner can do. When
+those are exhausted, the app shows a calm fatigue ending rather than failure
+framing.
+
+**Colour never carries correctness alone.** Corrections use amber *plus*
+alignment, a label, an underline, and a weight change. Progress is proportional
+and carries an approximate spoken label — never a score, never a numeric
+accessibility value.
+
+> Authored OKLCH colour roles compile once into Display P3 asset catalogs.
+> SwiftUI consumes semantic theme roles only; feature code contains no palette
+> literals.
+
+The typography is split three ways by job: a system serif for editorial voice,
+SF Pro for instruction and interface, SF Mono for spelling strings and
+graphemes. A readable-typography preference adds tracking and line spacing —
+and deliberately makes no claim that spacing or any typeface treats dyslexia.
+
+## What shipped
+
+Currently on internal TestFlight, not yet publicly available.
+
+The production slice runs end to end: first-run preferences and calibration
+resume through the real orchestrator; Home composes and persists an explicitly
+authorised practice session, verifies offline system speech, and routes into
+it. Responses persist feedback and learner state atomically before advancing.
+Reviewed unseen-word probes stay marked as transfer items in the persisted
+plan, and a first correct transfer earns one durable milestone whose
+acknowledgement survives relaunch.
+
+Sessions close on an authored summary that reuses the session's pattern moment,
+shows at most two eligible confidence changes, preserves transfer proof, and
+requires an explicit acknowledgement before another session can start. Free
+learners get one session per local day, derived from persisted completion
+state; the next strictly later local day reopens practice.
+
+A "Spelling DNA" view derives from persisted transfer attempts and confirmed
+diagnostic evidence — an aggregate preview for free learners, pattern-family
+and error-share detail with Core. Unscored, ambiguous, or unreviewed evidence
+stays invisible rather than becoming a learner-facing claim.
+
+## Outcome
+
+Too early for outcome claims, and I'd rather say that than manufacture one.
+
+What exists is a product whose architecture matches its thesis: there is no
+code path that lets Spellum tell a learner they've mastered something it hasn't
+observed them do. That was the goal, and it's verifiable by reading the
+composition root rather than by trusting a screenshot.
+
+## What I'd change
+
+**The authority chain slowed the first three phases considerably.** Writing the
+product architecture, the UX brief, and the design response before meaningful
+SwiftUI existed felt like procrastination at the time. It paid back later —
+but I'd compress the first pass and let the documents earn their detail
+incrementally rather than trying to specify twelve phases up front.
+
+**Reviewed-content gating is a real bottleneck.** Failing closed on unreviewed
+content is correct, and it means content authoring is now the critical path for
+release rather than engineering. I under-estimated that when designing the
+gates, and I'd build the authoring and review tooling in parallel with the
+engine rather than after it.
+
+**Remaining gates are open and named.** Reviewed content, Apple system
+requirements, legal, device coverage, and operational readiness are all
+explicitly unresolved. That's why there's no link on this page.

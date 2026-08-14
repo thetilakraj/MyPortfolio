@@ -1,0 +1,93 @@
+---
+import { url } from '../lib/url';
+
+interface Props {
+  id: string;
+  title: string;
+  summary: string;
+  status: string;
+  employer?: string;
+  vehicle?: string;
+  start: string;
+  end?: string;
+  stack?: string[];
+}
+
+const {
+  id,
+  title,
+  summary,
+  status,
+  employer,
+  vehicle,
+  start,
+  end,
+  stack = [],
+} = Astro.props;
+
+const statusLabel =
+  {
+    live: 'Live in production',
+    'in-development': 'In development',
+    'in-progress': 'In progress',
+    delivered: 'Delivered',
+    archived: 'Archived',
+  }[status] ?? status;
+
+const year = (s: string) => s.slice(0, 4);
+const period = end
+  ? year(start) === year(end)
+    ? year(start)
+    : `${year(start)}–${year(end)}`
+  : `${year(start)}–`;
+
+const attribution = vehicle ?? employer;
+---
+
+<article>
+  <a
+    href={url(`/work/${id}`)}
+    class="group block rounded-[8px] border border-rule bg-surface p-7 no-underline transition-transform duration-300 hover:-translate-y-0.5 sm:p-9"
+    style="box-shadow: var(--lift)"
+  >
+    <div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span
+        class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber"
+        >{statusLabel}</span
+      >
+      <span class="text-[0.7rem] text-faint" aria-hidden="true">·</span>
+      <span
+        class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-faint tabular-nums"
+        >{period}</span
+      >
+      {
+        attribution && (
+          <>
+            <span class="text-[0.7rem] text-faint" aria-hidden="true">
+              ·
+            </span>
+            <span class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-faint">
+              {attribution}
+            </span>
+          </>
+        )
+      }
+    </div>
+
+    <h3 class="display display-md mb-3 transition-colors group-hover:text-amber">
+      {title}
+    </h3>
+
+    <p class="max-w-[54ch] text-[1.0625rem] leading-[1.7] text-muted">
+      {summary}
+    </p>
+
+    {
+      stack.length > 0 && (
+        <p class="mt-5 font-mono text-[0.6875rem] tracking-wide text-faint">
+          {stack.join('  ·  ')}
+        </p>
+      )
+    }
+  </a>
+</article>

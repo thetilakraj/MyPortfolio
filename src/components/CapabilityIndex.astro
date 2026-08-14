@@ -1,0 +1,92 @@
+---
+/**
+ * Tier 3 of the inventory: the breadth of enterprise delivery, described by
+ * capability rather than by application name.
+ *
+ * Deliberately NOT a list of app names. Object identifiers from client systems
+ * leak naming conventions and system structure, so what is published is the
+ * shape of the work, the employer, and the sector.
+ */
+const rows = [
+  {
+    period: '2015–2019',
+    employer: 'Accenture',
+    place: 'Bengaluru',
+    sector: 'Energy, retail',
+    capability:
+      'Analytical and portfolio dashboards with drill-down and custom filtering. Hierarchical data tables. Sales and procurement transaction apps. Process flows, organisational charts, and document services. Barcode-driven scanning and ordering. Offline-capable mobile via SMP SDK, Cordova and Kapsel.',
+  },
+  {
+    period: '2019–2020',
+    employer: 'LTIMindtree',
+    place: 'Bengaluru',
+    sector: 'FMCG',
+    capability:
+      'Master data governance applications. Multi-stage approval matrices. Cost centre and internal order management. Master data request monitoring, and the notification systems around them.',
+  },
+  {
+    period: '2021',
+    employer: 'Wipro',
+    place: 'Bengaluru',
+    sector: 'Energy',
+    capability:
+      'Paired request and administration workflow applications spanning expense, procurement and permitting — one consistent interaction system, nine deployments.',
+  },
+  {
+    period: '2021–2022',
+    employer: 'Baariz Technology Solutions',
+    place: 'Doha, Qatar',
+    sector: 'Energy',
+    capability: 'SAP UI5 Fiori consulting delivery.',
+  },
+  {
+    period: '2022–',
+    employer: 'Chicken Farmers of Ontario',
+    place: 'Toronto',
+    sector: 'Agriculture',
+    capability:
+      'Senior Software Developer, then Technical Lead. SAP BTP, SAPUI5, CAP and Gateway services. Governance of vendor-delivered development, and production launch ownership.',
+  },
+];
+---
+
+<section id="capability" class="scroll-mt-20 rounded-[8px] bg-pitch px-7 py-12 sm:px-10">
+  <p
+    class="mb-3 font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber-bright"
+  >
+    Capability index
+  </p>
+  <h2
+    class="mb-4 font-display text-[clamp(1.5rem,3vw,2.25rem)] font-black uppercase leading-[0.95] tracking-[-0.015em] text-[#f3eef6]"
+  >
+    Roughly sixty applications
+  </h2>
+  <p class="mb-10 max-w-[58ch] text-[0.95rem] leading-[1.75] text-[#b9afc2]">
+    Individual application names are client system identifiers, so they aren't
+    published. What follows is the breadth — the archetypes I've delivered, and
+    where.
+  </p>
+
+  <ul class="m-0 list-none p-0">
+    {
+      rows.map((r) => (
+        <li class="grid gap-x-10 gap-y-3 border-t border-pitch-rule py-6 sm:grid-cols-[11rem_1fr]">
+          <div>
+            <p class="m-0 font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] tabular-nums text-amber-bright">
+              {r.period}
+            </p>
+            <p class="m-0 mt-2 font-display text-[0.95rem] font-semibold uppercase tracking-[0.06em] text-[#e9e3ee]">
+              {r.employer}
+            </p>
+            <p class="m-0 mt-1 text-xs italic text-[#8f8599]">
+              {r.place} · {r.sector}
+            </p>
+          </div>
+          <p class="m-0 max-w-[46rem] text-[0.95rem] leading-[1.75] text-[#b9afc2]">
+            {r.capability}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</section>

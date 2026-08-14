@@ -1,0 +1,270 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { url } from '../lib/url';
+
+import award from '../assets/about/award.jpg';
+import certificateFiori from '../assets/about/certificate-fiori.png';
+import certificateHana from '../assets/about/certificate-hana.png';
+import art01 from '../assets/about/art-01.jpg';
+import art02 from '../assets/about/art-02.jpg';
+import art03 from '../assets/about/art-03.jpg';
+import art04 from '../assets/about/art-04.jpg';
+
+const paintings = [
+  {
+    src: art04,
+    alt: 'Painting of a black cat in ceremonial military dress against a green background',
+  },
+  { src: art03, alt: 'Graphite portrait of a bearded man' },
+  { src: art02, alt: 'Painted study of a single eye on a small canvas' },
+  {
+    src: art01,
+    alt: 'Painting of a night sky over a dark treeline, graded from deep blue to amber at the horizon',
+  },
+];
+
+const timeline = [
+  {
+    when: 'Sep 2024 – present',
+    what: 'Chicken Farmers of Ontario',
+    detail: 'Technical Lead — Toronto',
+  },
+  {
+    when: 'Apr 2022 – Sep 2024',
+    what: 'Chicken Farmers of Ontario',
+    detail: 'Senior Software Developer — Toronto',
+  },
+  {
+    when: 'Oct 2021 – Mar 2022',
+    what: 'Baariz Technology Solutions',
+    detail: 'SAP UI5 Fiori Consultant — Doha, Qatar',
+  },
+  {
+    when: '2021',
+    what: 'Humber College',
+    detail: 'Postgraduate, User Experience (UX) Design — Toronto',
+  },
+  {
+    when: 'Jan – Jul 2021',
+    what: 'Wipro',
+    detail: 'Associate Consultant — Bengaluru',
+  },
+  {
+    when: 'May 2019 – Dec 2020',
+    what: 'LTIMindtree',
+    detail: 'Associate Consultant → Senior Consultant — Bengaluru',
+  },
+  {
+    when: 'Oct 2015 – Mar 2019',
+    what: 'Accenture',
+    detail:
+      'Associate Software Engineer → Application Development Analyst — Bengaluru',
+  },
+];
+
+/**
+ * The two SAP global certifications carry verifiable badges; the remaining
+ * three are course completions and have no badge URL.
+ *
+ * NOTE: the original site pointed both VERIFY buttons at the same Credly badge
+ * id, which cannot be right for two different certifications. Both are wired
+ * to that id here so nothing regresses, but the HANA badge needs its own URL.
+ */
+const CREDLY_BADGE =
+  'https://www.credly.com/badges/3d2e3ede-e170-4d47-b9fc-6ef972f46b0d?source=linked_in_profile';
+
+const badged = [
+  {
+    title: 'SAP Certified Development Associate',
+    subject: 'SAP Fiori Application Developer',
+    issued: 'Sept 2020',
+    image: certificateFiori,
+    alt: 'SAP global certification for SAP Fiori Application Developer',
+    verify: CREDLY_BADGE,
+  },
+  {
+    title: 'SAP Certified Development Associate',
+    subject: 'SAP HANA 2.0 (SPS04)',
+    issued: 'Sept 2020',
+    image: certificateHana,
+    alt: 'SAP global certification for SAP HANA 2.0 SPS04',
+    verify: CREDLY_BADGE,
+  },
+];
+
+const courses = [
+  'Intelligent Enterprise User Experience with SAP Fiori 3',
+  'SAP Fiori Overview: Design, Develop and Deploy',
+  'Building Applications with SAP Cloud Application Programming Model',
+];
+---
+
+<BaseLayout
+  title="About — Tilak Raj"
+  description="SAP BTP Lead Consultant and product designer in Toronto, with ten years across enterprise SAP delivery and independent product work."
+>
+  <header class="bloom pb-14">
+    <p class="eyebrow mb-6">Toronto, Ontario</p>
+    <h1 class="display display-lg">About</h1>
+    <p class="lede mt-7 max-w-[48ch]">
+      An SAP BTP Lead Consultant, UI/UX designer, and app developer with over
+      ten years in the industry.
+    </p>
+  </header>
+
+  <section class="mb-20 grid gap-x-16 gap-y-8 sm:grid-cols-[1fr_auto] sm:items-start">
+    <div>
+      <p class="mb-5 max-w-[58ch] text-[1.0625rem] leading-[1.8] text-muted">
+        I came to software through electrical and electronics engineering, and
+        to design through a postgraduate in UX. My work has sat on both sides of
+        a line most people pick one of: enterprise delivery inside somebody
+        else's design language and governance, and independent products where I
+        write the constraints myself.
+      </p>
+      <p class="max-w-[58ch] text-[1.0625rem] leading-[1.8] text-muted">
+        I was raised on the culture of the 90s, which is probably why I still
+        think a thing you can hold beats a thing you can only scroll.
+      </p>
+    </div>
+
+    <a
+      href={url('/Tilak-Raj-Resume-2026.pdf')}
+      target="_blank"
+      rel="noopener"
+      class="inline-block shrink-0 rounded-[4px] bg-plum px-6 py-3 font-display text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white no-underline transition-colors hover:bg-ink"
+    >
+      Résumé (PDF)
+    </a>
+  </section>
+
+  <!-- ============================= TIMELINE ============================ -->
+  <section class="mb-20">
+    <h2 class="display display-md mb-8 border-t border-rule pt-6">Timeline</h2>
+    <ul class="m-0 list-none p-0">
+      {
+        timeline.map((row) => (
+          <li class="grid gap-x-8 gap-y-1 border-b border-rule-soft py-4 sm:grid-cols-[12rem_1fr]">
+            <span class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.18em] tabular-nums text-faint">
+              {row.when}
+            </span>
+            <span>
+              <strong class="font-display text-[0.95rem] font-semibold uppercase tracking-[0.06em] text-plum">
+                {row.what}
+              </strong>
+              <span class="block text-[0.95rem] italic text-muted">
+                {row.detail}
+              </span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- =========================== CREDENTIALS =========================== -->
+  <section class="mb-20">
+    <h2 class="display display-md mb-8 border-t border-rule pt-6">
+      Credentials
+    </h2>
+
+    <div class="mb-12 grid gap-6 sm:grid-cols-2">
+      {
+        badged.map((c) => (
+          <figure class="m-0 overflow-hidden rounded-[8px] border border-rule bg-surface" style="box-shadow: var(--lift)">
+            <Image
+              src={c.image}
+              alt={c.alt}
+              widths={[420, 840]}
+              sizes="(min-width: 640px) 420px, 100vw"
+              class="block w-full border-b border-rule-soft bg-white"
+            />
+            <figcaption class="p-5">
+              <p class="m-0 font-display text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-faint">
+                {c.title}
+              </p>
+              <p class="m-0 mt-1.5 font-display text-[1rem] font-semibold uppercase leading-tight tracking-[0.04em] text-plum">
+                {c.subject}
+              </p>
+              <p class="m-0 mt-1 text-[0.85rem] italic text-muted">
+                Issued by SAP · {c.issued}
+              </p>
+              <a
+                href={c.verify}
+                target="_blank"
+                rel="noopener"
+                class="mt-4 inline-block rounded-[3px] border border-amber px-4 py-2 font-display text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-amber no-underline transition-colors hover:bg-amber hover:text-white"
+              >
+                Verify badge &nearr;
+              </a>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+
+    <p class="eyebrow mb-4">Also completed</p>
+    <ul class="m-0 list-none p-0">
+      {
+        courses.map((c) => (
+          <li class="border-b border-rule-soft py-3 text-[0.95rem] text-muted">
+            {c}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- =========================== RECOGNITION =========================== -->
+  <section class="mb-20 rounded-[8px] bg-pitch p-7 sm:p-10">
+    <p
+      class="mb-3 font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber-bright"
+    >
+      Recognition
+    </p>
+    <h2
+      class="mb-4 max-w-[18ch] font-display text-[clamp(1.4rem,3vw,2rem)] font-black uppercase leading-[0.98] tracking-[-0.015em] text-[#f3eef6]"
+    >
+      Accenture Client &amp; Customer Award
+    </h2>
+    <p class="mb-8 max-w-[52ch] text-[0.95rem] leading-[1.75] text-[#b9afc2]">
+      Awarded in the team category for contribution to client business outcomes
+      — accelerating delivery toward Accenture's goal of adding a new Diamond
+      Client, December 2018.
+    </p>
+    <Image
+      src={award}
+      alt="Accenture Client and Customer Award certificate issued to Tilak Raj in the team category"
+      widths={[640, 1000, 1400]}
+      sizes="(min-width: 768px) 700px, 100vw"
+      loading="lazy"
+      class="w-full max-w-[42rem] rounded-[6px]"
+      style="box-shadow: var(--lift-lg)"
+    />
+  </section>
+
+  <!-- ============================ PAINTINGS ============================ -->
+  <section>
+    <h2 class="display display-md mb-3 border-t border-rule pt-6">Also</h2>
+    <p class="mb-8 max-w-[58ch] text-[1.0625rem] leading-[1.8] text-muted">
+      I paint. Not well, and not often — but it is the only thing I make where
+      nothing has to ship.
+    </p>
+    <ul class="m-0 grid list-none grid-cols-2 gap-4 p-0 sm:grid-cols-4">
+      {
+        paintings.map((p) => (
+          <li>
+            <Image
+              src={p.src}
+              alt={p.alt}
+              widths={[280, 560]}
+              sizes="(min-width: 640px) 22vw, 45vw"
+              class="aspect-square w-full rounded-[6px] object-cover"
+              style="box-shadow: var(--lift)"
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</BaseLayout>

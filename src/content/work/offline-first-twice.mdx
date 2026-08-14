@@ -1,0 +1,109 @@
+---
+title: Offline-first, twice
+summary: Building offline-capable enterprise mobile apps in 2016, then choosing offline-first again for a consumer product in 2025 — with nobody making me.
+pillar: enterprise
+featured: false
+employer: Accenture
+domain: energy
+role: Mobile development
+start: '2016-01'
+end: '2018-12'
+status: delivered
+confidentiality: internal
+stack:
+  - SMP SDK
+  - Cordova
+  - Kapsel
+  - SAPUI5
+order: 5
+---
+
+The most useful thing enterprise work gave me wasn't a technology. It was a
+default I didn't know I'd absorbed until I caught myself applying it a decade
+later, to a product nobody was making me build that way.
+
+_No client names or system detail. The enterprise half of this is described as
+practice._
+
+## The first time
+
+Around 2016 I built offline-capable SAP mobile applications using the SMP SDK
+with Cordova and Kapsel plugins. This was not a fashionable architecture. It
+was a requirement, and it came from the users.
+
+The people using these apps worked in plants and in the field. Connectivity
+there was not a spectrum from fast to slow — it was a binary that flipped
+without warning, in places where the work continued regardless. An app that
+assumed a network was not a degraded app. It was an app that got left on the
+truck.
+
+That forces a particular discipline. The device has to hold enough state to be
+useful alone. Sync becomes an explicit, designed event rather than an
+invisible assumption. Conflict resolution has to have an answer before it has a
+conflict. And crucially, the interface has to tell the truth about what it
+knows: which records are local, which are confirmed, and what will happen when
+signal returns.
+
+Offline was tedious to build and it was never the part of the demo anyone
+applauded. It was the part that determined whether the rollout succeeded.
+
+## The second time
+
+In 2025 I started building a spelling learning app for adults and ESL learners.
+Nobody required offline. The obvious architecture for a modern iOS app is a
+thin client with a server holding the learning model — easier to iterate,
+easier to instrument, easier to change your mind about.
+
+I chose offline-first anyway, and it took me a while to articulate why beyond
+"it felt right."
+
+The honest reason is the same one from the plant floor. The learners I care
+about practise in transit — on a bus, on a train, in the twenty minutes between
+things. That is exactly where connectivity is worst and exactly where the habit
+either forms or doesn't. An app that needs a network in those twenty minutes
+is an app that gets deleted in week three.
+
+The consequence is the same discipline, arrived at from the opposite
+direction: every learning decision has to be computable on-device from
+persisted state. Progress, evidence, and session composition all resolve
+locally. Nothing waits on a round trip to decide what the learner sees next.
+
+## What actually transferred
+
+Not the SDK — none of that code or tooling is relevant to Swift. What
+transferred was three habits.
+
+**State is the product.** In an offline-first system you cannot hide behind the
+server as the source of truth. Whatever the device persists *is* the truth
+until proven otherwise, which forces you to be precise about what you're
+storing and why. Both systems end up with an explicit, versioned local schema
+because there is nowhere else to put the ambiguity.
+
+**Failure states are designed, not caught.** Offline work teaches you that the
+degraded path is a real path with real users on it, so it gets designed with
+the same care as the happy one. That habit is why the radio product I built has
+an honest offline shell rather than a spinner, and why a bad practice session
+still closes on something the learner can do.
+
+**Atomicity or nothing.** Interruption is normal — a tunnel, a phone call, a
+force-quit. Both systems persist state and feedback together, before advancing,
+because the alternative is a learner or a technician discovering later that the
+last thing they did didn't count.
+
+## Why it matters here
+
+Enterprise work is often framed as the thing you do before you get to do
+interesting work. That framing gets the direction of causation backwards.
+
+The constraint I was handed in 2016 — assume the network is gone — turned out
+to be a better product instinct than anything I would have arrived at with
+total freedom. When I finally had that freedom, I used it to impose the same
+constraint on myself.
+
+## What I'd change
+
+**I'd have named the pattern sooner.** I carried this as an instinct for nearly
+a decade before writing it down as a principle. Instincts don't transfer to
+other people, and they don't survive a busy quarter. Written constraints do —
+which is why both of my own products now start with the constraints in a
+document before anything is built.

@@ -1,0 +1,169 @@
+---
+title: Radioverse
+summary: A station-first internet radio app with a curated catalogue, a vinyl-inspired player, and live song identification. Designed, built, and shipped solo.
+pillar: products
+featured: true
+vehicle: TritSync Incorp Inc.
+domain: consumer
+role: Research, design, engineering, billing, ops
+start: '2025-01'
+status: live
+confidentiality: public
+stack:
+  - Next.js
+  - TypeScript
+  - Firebase
+  - Stripe
+  - Serwist
+links:
+  - label: listenradioverse.com
+    href: https://listenradioverse.com
+    kind: site
+outcomes:
+  - metric: Cold TTFB, mobile
+    value: 3.1s → ~0.8s
+    note: Min-instance warm start plus a gzip-negotiated catalogue endpoint.
+  - metric: Cumulative Layout Shift
+    value: 0.673 → ~0.007
+    note: Reserving the player console's height before audio metadata arrives.
+order: 1
+---
+
+Radioverse is a live internet radio app built on one deliberate inversion: the
+**station** is the primary object, not the track. Everything else — the
+catalogue, the player, the recovery behaviour — follows from that.
+
+## Situation
+
+Internet radio directories are abundant and almost all of them are bad in the
+same way. They are exhaustive rather than curated, so a search returns
+thousands of results of which a large share are dead streams, duplicates of
+each other, or mislabelled talk stations sitting under a music genre. The
+listener does the quality control, one broken stream at a time.
+
+The opposite failure is the streaming-service model, where the track is the
+object and stations are just playlists with worse metadata. That throws away
+the thing radio is actually good at: someone, somewhere, choosing what plays
+next.
+
+I wanted the second thing without the first thing's tax. Curated music-first
+discovery, no ads, and a player that behaves like an object rather than a
+web page.
+
+## Constraints
+
+**Solo, across every layer.** Research, design system, frontend, backend,
+billing, security, and production operations. There is no one to hand a spec
+to, which sounds like freedom and is mostly a forcing function — anything I
+build badly, I also maintain badly.
+
+**Live audio is not fakeable.** A streaming app cannot pretend to work offline,
+and the honest failure states are a real design surface rather than an
+afterthought. Streams stall mid-song, go dead without warning, and vary wildly
+in startup latency depending on network quality.
+
+**The source data is hostile.** The catalogue is assembled from third-party
+directories — Radio Browser primary, IPRD secondary — which means duplicates,
+dead endpoints, inconsistent genre taxonomies, and heavy country skew are the
+input condition, not an edge case.
+
+**Real money.** Billing is live, so gating has to be enforced server-side and
+the free tier has to stay genuinely usable rather than a nag screen.
+
+## Decisions
+
+**Catalogue as an editorial product, not a query.** Rather than proxying a
+directory, the app builds a curated base catalogue: country quotas across 34
+supported markets inside a fixed headroom limit, quality filtering, dedupe,
+and genre balancing, with an editorially curated dataset that is authoritative
+for its own entries and overrides the upstream sources. Firestore holds a
+fallback snapshot so an upstream outage degrades instead of failing.
+
+The rejected alternative was live-querying the directory per search. Cheaper to
+build, and it would have made the catalogue's quality permanently someone
+else's problem.
+
+**Resilience as a feature, not error handling.** Playback carries mid-stream
+stall recovery behind a single-deadline rebuffer watchdog, startup timeouts
+scaled to measured network quality, and a session-scoped memory of stations
+that already failed so Shuffle stops offering them. Previous walks real history
+rather than re-randomising, and Next re-walks forward through it.
+
+**A runtime quality engine that is allowed to say "I don't know."** Playback
+emits privacy-safe quality events, aggregated daily into compact snapshots that
+feed bounded ranking, shuffle, and fallback hints. Every hint is
+confidence-tiered. In production, event ingestion, ranking hints, and probes
+are enabled while fallback influence stays off.
+
+This is the decision I'd defend hardest and the one that currently looks least
+impressive — see the last section.
+
+**One locked visual direction.** The system is committed to a restrained
+physical audio instrument: a matte charcoal shell, a plinth as the primary
+object, the vinyl seated inside it. Every surface holds the same material
+ratio.
+
+> 80% black shadow depth, 15% white and metal edge highlight, 5% amber signal.
+>
+> Amber is signal-only — active station, primary playback state, premium
+> markers, tiny hardware LEDs. It never becomes decoration.
+
+Writing that ratio down converted a hundred future style arguments into one
+lookup. It is also the rule this portfolio borrows.
+
+## What shipped
+
+Free, after login: browse and search live stations by station, country, genre
+and language; play with next, previous, shuffle, mute and volume; an immersive
+fullscreen player; favourites; track likes and a lightweight listening history;
+and installation as a PWA with an offline shell that never pretends live audio
+works offline.
+
+Premium, on live Stripe billing: on-demand song identification from the audio
+of the currently playing station, server-side gated and daily-capped; playlists
+that keep provenance back to the station the track came from; a sleep timer
+with a gentle fade; a floating desktop player; and flag-gated device-local EQ
+presets and genre-aware immersive themes.
+
+Underneath: an App Router PWA with Media Session controls and a Serwist service
+worker holding strict network-only rules for identify, auth, Firebase and media
+paths; production security headers, a report-only CSP, explicit API method
+guards, tightened input validation on identify, service-worker notification URL
+constraints, Firestore rule regression coverage, and client-asset secret
+scanning.
+
+## Outcome
+
+Live in production and paying its own way, built and operated by one person.
+
+The performance numbers above are the two that moved most. Mobile first load
+was the worst experience in the product — a cold container plus an
+unconstrained catalogue response plus a player whose height wasn't reserved
+until audio metadata resolved. Fixing it took three unglamorous changes:
+guaranteeing a warm instance, negotiating gzip on the catalogue endpoint, and
+reserving the console's layout box up front.
+
+I am deliberately not quoting a user count. The product is early and the number
+would invite the wrong comparison — the claim here is that one person shipped a
+billing-enabled, security-hardened, resilient streaming PWA, and that claim
+stands on the engineering.
+
+## What I'd change
+
+**I built the quality engine ahead of its data.** It is correct, it is
+privacy-safe, and at current traffic its confidence tiers stay low enough that
+ranking is effectively neutral. The architecture is sound and the investment
+was premature; the same effort spent on discovery surfaces would have produced
+visible value sooner. I'd build the event pipeline first and the ranking layer
+only once the volume justified it.
+
+**Performance is a release gate, not a solved problem.** The improvements above
+were measured locally and in targeted production checks. A full production
+mobile Lighthouse remeasure is still open, and I'd rather say that than imply a
+clean bill of health.
+
+**Re-engagement is scaffolding, honestly labelled.** Share Target and App
+Badging are implemented, token registration is guarded, and the visible opt-in
+rail is hidden for this release. There are no push jobs or schedulers running.
+It's a foundation, and calling it a shipped feature would be a lie I'd have to
+maintain.

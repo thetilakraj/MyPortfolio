@@ -1,0 +1,182 @@
+---
+/**
+ * Embeds the live Radioverse app in the hero.
+ *
+ * REQUIRES A CHANGE ON THE RADIOVERSE SIDE TO RENDER.
+ * listenradioverse.com currently responds with `x-frame-options: DENY`, which
+ * instructs every browser to refuse to display it in a frame from any origin.
+ * Until that is relaxed to allow this origin, the panel below shows the
+ * browser's blocked-frame error instead of the app. See the fallback note.
+ *
+ * To switch it on, in the Radioverse app replace the X-Frame-Options header
+ * with a frame-ancestors directive naming this site, e.g.
+ *   Content-Security-Policy: frame-ancestors 'self' https://thetilakraj.github.io
+ * X-Frame-Options has no multi-origin form, so it must be dropped rather than
+ * edited — frame-ancestors supersedes it in every current browser.
+ */
+
+const APP_URL = 'https://listenradioverse.com';
+---
+
+<figure class="embed m-0">
+  <!-- chrome bar: makes it read as an embedded app, not a broken page -->
+  <div class="bar">
+    <span class="lights" aria-hidden="true">
+      <i></i><i></i><i></i>
+    </span>
+    <span class="addr">listenradioverse.com</span>
+    <a class="pop" href={APP_URL} target="_blank" rel="noopener">
+      Open in a new tab &nearr;
+    </a>
+  </div>
+
+  <div class="frame-wrap">
+    <!-- Fallback sits behind the frame. If the browser blocks the embed it
+         paints its own error over this; the caption below still explains. -->
+    <div class="fallback" aria-hidden="true">
+      <p class="fallback-title">Radioverse</p>
+      <p class="fallback-body">Live radio, loading…</p>
+    </div>
+
+    <iframe
+      src={APP_URL}
+      title="Radioverse — live internet radio, running inside this page"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      allow="autoplay; encrypted-media; clipboard-write"
+      sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-storage-access-by-user-activation"
+    ></iframe>
+  </div>
+
+  <figcaption class="cap">
+    Radioverse, running live in the page — designed, built, and shipped solo.
+    If the player doesn't appear, the browser has blocked the embed:
+    <a href={APP_URL} target="_blank" rel="noopener">open it directly &nearr;</a>
+  </figcaption>
+</figure>
+
+<style>
+  .embed {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--pitch);
+    box-shadow: var(--lift-lg);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem 0.9rem;
+    background: #241f28;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .lights {
+    display: flex;
+    gap: 0.35rem;
+    flex: none;
+  }
+
+  .lights i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #3d3545;
+  }
+
+  .lights i:first-child {
+    background: color-mix(in oklab, var(--amber-bright) 70%, #3d3545);
+  }
+
+  .addr {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #8f8599;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pop {
+    flex: none;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber-bright);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .pop:hover {
+    text-decoration: underline;
+  }
+
+  .frame-wrap {
+    position: relative;
+    /* Tall enough for the app's three-column layout to be usable. */
+    aspect-ratio: 16 / 10;
+    min-height: 26rem;
+    background: var(--pitch);
+  }
+
+  @media (max-width: 40rem) {
+    .frame-wrap {
+      aspect-ratio: 3 / 4;
+      min-height: 30rem;
+    }
+  }
+
+  .fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    text-align: center;
+    gap: 0.4rem;
+    color: #8f8599;
+  }
+
+  .fallback-title {
+    margin: 0;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: #f3eef6;
+  }
+
+  .fallback-body {
+    margin: 0;
+    font-size: 0.85rem;
+    font-style: italic;
+  }
+
+  iframe {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .cap {
+    padding: 0.9rem 1.1rem;
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: #8f8599;
+    background: #1a151e;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .cap a {
+    color: var(--amber-bright);
+    text-underline-offset: 3px;
+  }
+</style>

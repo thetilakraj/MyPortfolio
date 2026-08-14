@@ -1,0 +1,130 @@
+---
+title: A decade of enterprise Fiori
+summary: Full-lifecycle SAP delivery across energy, retail and FMCG — dashboards, master data governance, approval workflows, and offline-capable mobile.
+pillar: enterprise
+featured: false
+employer: Accenture · LTIMindtree · Wipro
+domain: energy
+role: Developer → Consultant → Senior Consultant
+start: '2015-10'
+end: '2021-07'
+status: delivered
+confidentiality: internal
+stack:
+  - SAPUI5
+  - SAP Fiori
+  - SAP ECC
+  - S/4HANA
+  - SMP SDK
+order: 4
+---
+
+Six years, three employers, and something close to sixty applications delivered
+end to end in SAP ECC and S/4HANA landscapes for clients in energy
+(hydrocarbon), retail, and FMCG.
+
+_Client work lives in client systems. This describes the patterns and the
+practice — no client names, no screenshots, no system detail._
+
+## Situation
+
+Enterprise SAP interfaces have a deserved reputation. The default is a
+transaction screen designed for someone who was trained on it for a week, has
+used it daily for nine years, and would rather you changed nothing. Fiori was
+SAP's answer to that, and rolling it out across an existing landscape means
+retrofitting a design language onto processes that predate it by decades.
+
+The work is rarely about inventing an interaction. It's about finding the
+smallest coherent surface that a business process can be squeezed into without
+lying about the process.
+
+## Constraints
+
+**A design language you didn't choose.** Fiori is a system with opinions.
+Deviating is possible, expensive, and usually a mistake — an app that looks
+unlike the launchpad around it reads as broken rather than as bespoke.
+
+**The backend is the immovable object.** Data models, gateway services, and
+authorisation objects are typically fixed before design starts. The interface
+has to absorb the mismatch between how the business describes its work and how
+the system stores it.
+
+**Users you don't get much access to.** Enterprise users are doing their actual
+jobs. Research happens in scheduled focus groups, not on demand, so each
+session has to earn its cost.
+
+**Multi-language and multi-region by default.** Layouts that only survive
+English are not finished layouts.
+
+## Decisions
+
+**Design in the client's language, validate in mine.** UX work ran through
+client focus groups with prototypes built in SAP Build and Figma. Showing a
+process owner a clickable flow surfaces disagreements that a specification
+review never will — most usefully, disagreements between two people on the
+client side who both thought the process was obvious.
+
+**Find the archetype, then reuse it.** Across employers the same shapes recur:
+an analytical dashboard over a domain, a hierarchical table for structures that
+are genuinely trees, a paired create-and-approve workflow, a master data
+governance surface with a multi-stage approval matrix, a document or attachment
+service, a scan-driven entry point.
+
+The most useful thing I learned in this period is that the second app in a
+family is a design opportunity and the ninth is a systems problem. On a suite
+of paired request-and-administration applications, treating them as one
+interaction system with nine instantiations — rather than nine apps that
+resemble each other — was the difference between a consistent product and nine
+slightly different opinions about what a date picker is.
+
+**Notifications are part of the interface.** A surprising share of enterprise
+UX lives in the email a user receives when something needs them, not in the app
+they open afterwards. Treating notification templates as a designed surface
+rather than a developer afterthought reliably reduced the "where do I click"
+support load.
+
+**Offline is an architecture decision, not a setting.** For field and plant
+users, offline-capable mobile via the SMP SDK with Cordova and Kapsel plugins
+was the difference between an app that got used and an app that got blamed.
+That thread is picked up separately in *Offline-first, twice*.
+
+## What shipped
+
+Analytical and portfolio dashboards with drill-down and custom filtering.
+Hierarchical data tables. Sales and procurement transaction applications.
+Process flows, organisational charts, and document services. Barcode-driven
+scanning and ordering. Offline-capable mobile applications.
+
+Master data governance surfaces with multi-stage approval matrices, cost centre
+and internal order management, master data request monitoring, and the
+notification systems around them.
+
+A suite of paired request and administration applications spanning expense,
+procurement, and permitting — one interaction system, nine deployments.
+
+## Outcome
+
+The work carried a client through to a Diamond Client relationship and earned
+an Accenture Excellence Award, which is the only externally validated outcome I
+can point at from this period without disclosing client detail.
+
+The more durable outcome is the pattern library in my head. Nearly every
+product decision I make now — the paired create/approve shape, treating
+notifications as interface, refusing to let the ninth instance drift — traces
+back to something that went wrong once in an enterprise rollout.
+
+## What I'd change
+
+**I designed screens for too long before designing systems.** For the first two
+or three years I optimised individual applications. The leverage was always one
+level up, in the consistency between them, and I found that late.
+
+**I under-invested in research access.** Focus groups were scheduled because
+that was the process. I never pushed hard enough for shorter, more frequent
+contact with actual end users, and I shipped things a fifteen-minute
+conversation would have prevented.
+
+**I treated documentation as an output rather than a design tool.** Writing the
+specification first turns out to be the cheapest way to discover that two
+stakeholders disagree. I learned that as a lead, and I'd have been more useful
+sooner if I'd learned it as a consultant.

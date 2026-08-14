@@ -1,0 +1,51 @@
+---
+import { url, isCurrent } from '../lib/url';
+
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+];
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-rule/70 bg-paper/85 backdrop-blur-md"
+>
+  <div
+    class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4"
+  >
+    <a href={url('/')} class="no-underline">
+      <span
+        class="font-display text-[0.9rem] font-black uppercase tracking-[0.2em] text-plum"
+        >Tilak Raj</span
+      >
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="flex list-none items-center gap-8 p-0">
+        {
+          links.map(({ href, label }) => {
+            const current = isCurrent(href, pathname);
+            return (
+              <li>
+                <a
+                  href={url(href)}
+                  aria-current={current ? 'page' : undefined}
+                  class:list={[
+                    'font-display text-[0.72rem] font-semibold uppercase tracking-[0.18em] no-underline transition-colors',
+                    current
+                      ? 'text-amber'
+                      : 'text-muted hover:text-plum',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+  </div>
+</header>

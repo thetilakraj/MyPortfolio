@@ -41,6 +41,27 @@ const showcases: Record<
 
 const showcase = showcases[entry.id] ?? [];
 
+/**
+ * Where a showcase image should link when clicked. Only public work with a
+ * live site gets one — internal work must never carry an outbound link.
+ */
+const liveSite =
+  d.confidentiality === 'public'
+    ? d.links.find((l) => l.kind === 'site')?.href
+    : undefined;
+
+// Render the showcase as a link only when there is somewhere safe to send
+// people. Internal work falls back to a plain container.
+const Shot = liveSite ? 'a' : 'div';
+const shotProps = liveSite
+  ? {
+      href: liveSite,
+      target: '_blank',
+      rel: 'noopener',
+      'aria-label': `Open ${d.title} live in a new tab`,
+    }
+  : {};
+
 /** The Fiori launchpad backdrop belongs only to the decade-long SAP study. */
 const showFiori = entry.id === 'enterprise-fiori-decade';
 
@@ -103,8 +124,9 @@ const facts = [
       showcase.length > 0 && (
         <div class="mx-auto max-w-6xl px-6 pb-4">
           <figure class="m-0">
-            <div
-              class="overflow-hidden rounded-[10px] bg-pitch ring-1 ring-pitch-rule"
+            <Shot
+              {...shotProps}
+              class="shot relative block overflow-hidden rounded-[10px] bg-pitch ring-1 ring-pitch-rule"
               style="box-shadow: var(--lift-lg)"
             >
               <Image
@@ -115,7 +137,9 @@ const facts = [
                 loading="eager"
                 class="block w-full"
               />
-            </div>
+              <span class="veil" aria-hidden="true" />
+              <span class="cta" aria-hidden="true">Listen live &nearr;</span>
+            </Shot>
             <figcaption class="eyebrow mt-4 text-center">
               {showcase[0].caption}
             </figcaption>
@@ -242,3 +266,91 @@ const facts = [
     </div>
   </article>
 </BaseLayout>
+
+<style>
+  /* Clickable showcase — only rendered as an <a> when a live site exists. */
+  a.shot {
+    text-decoration: none;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  a.shot:hover,
+  a.shot:focus-visible {
+    transform: translateY(-3px);
+  }
+
+  .veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      60% 60% at 50% 50%,
+      rgba(18, 15, 22, 0.5),
+      rgba(18, 15, 22, 0.75)
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    background: var(--amber-bright);
+    color: #1a1119;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+  }
+
+  /* div.shot (internal work) must never reveal a call to action. */
+  div.shot .veil,
+  div.shot .cta {
+    display: none;
+  }
+
+  a.shot:hover .veil,
+  a.shot:focus-visible .veil {
+    opacity: 1;
+  }
+
+  a.shot:hover .cta,
+  a.shot:focus-visible .cta {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  @media (hover: none) {
+    a.shot .cta {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    a.shot .veil {
+      opacity: 0.5;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    a.shot,
+    .veil,
+    .cta {
+      transition: none;
+    }
+    a.shot:hover,
+    a.shot:focus-visible {
+      transform: none;
+    }
+  }
+</style>

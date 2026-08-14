@@ -8,44 +8,144 @@ import baariz from '../assets/logos/baariz.png';
 import cfo from '../assets/logos/cfo.svg';
 
 /**
- * Employer marks, sized to a shared optical box rather than a shared pixel
- * width — logos have wildly different aspect ratios, so matching raw width
- * makes the wide ones dominate. A fixed max-height plus a fixed cell does it.
+ * Employer marks.
+ *
+ * Two problems a naive logo wall has, both handled here:
+ *
+ * 1. Aspect ratios differ wildly, so matching pixel WIDTH makes the wide
+ *    wordmarks dominate. Each mark is fitted to a shared optical box instead.
+ * 2. Five sets of brand colours fight each other and fight the page. The marks
+ *    are desaturated to a common weight by default and return to full colour
+ *    on hover or keyboard focus — so the row reads as one system, and the real
+ *    branding is still there when you look at it.
  */
 const employers = [
-  { name: 'Accenture', logo: accenture, years: '2015–2019' },
-  { name: 'LTIMindtree', logo: ltimindtree, years: '2019–2020' },
-  { name: 'Wipro', logo: wipro, years: '2021' },
-  { name: 'Baariz', logo: baariz, years: '2021–2022' },
-  { name: 'Chicken Farmers of Ontario', logo: cfo, years: '2022–' },
+  { name: 'Accenture', logo: accenture, years: '2015–2019', scale: 1 },
+  { name: 'LTIMindtree', logo: ltimindtree, years: '2019–2020', scale: 1 },
+  { name: 'Wipro', logo: wipro, years: '2021', scale: 1.28 },
+  { name: 'Baariz', logo: baariz, years: '2021–2022', scale: 1 },
+  { name: 'Chicken Farmers of Ontario', logo: cfo, years: '2022–', scale: 1 },
 ];
 ---
 
-<ul
-  class="m-0 grid list-none grid-cols-2 gap-px overflow-hidden rounded-[8px] border border-rule bg-rule p-0 sm:grid-cols-3 lg:grid-cols-5"
->
+<ul class="strip">
   {
     employers.map((e) => (
-      <li class="flex flex-col items-center justify-between gap-4 bg-surface px-4 py-7">
-        <div class="flex h-12 w-full items-center justify-center">
+      <li class="cell">
+        <span class="mark">
           <Image
             src={e.logo}
             alt={`${e.name} logo`}
-            widths={[160, 320]}
-            sizes="160px"
-            class="max-h-12 w-auto max-w-[7.5rem] object-contain"
+            widths={[200, 400]}
+            sizes="200px"
+            style={`--scale:${e.scale}`}
+            class="logo"
           />
-        </div>
+        </span>
 
-        <div class="text-center">
-          <p class="m-0 font-display text-[0.7rem] font-semibold uppercase leading-tight tracking-[0.12em] text-plum">
-            {e.name}
-          </p>
-          <p class="m-0 mt-1 font-display text-[0.65rem] font-semibold uppercase tracking-[0.18em] tabular-nums text-faint">
-            {e.years}
-          </p>
-        </div>
+        <span class="meta">
+          <span class="name">{e.name}</span>
+          <span class="years">{e.years}</span>
+        </span>
       </li>
     ))
   }
 </ul>
+
+<style>
+  .strip {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--rule);
+    box-shadow: var(--lift);
+  }
+
+  @media (min-width: 40rem) {
+    .strip {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .strip {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.15rem;
+    padding: 1.75rem 1rem 1.5rem;
+    background: var(--surface);
+    transition: background-color 0.25s ease;
+  }
+
+  .cell:hover {
+    background: #fff;
+  }
+
+  /* Shared optical box — every mark is fitted to the same height and width. */
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 3.25rem;
+  }
+
+  .logo {
+    width: auto;
+    height: auto;
+    max-height: calc(3.25rem * var(--scale, 1));
+    max-width: 8.5rem;
+    object-fit: contain;
+    /* Flatten five clashing palettes into one weight; restore on hover. */
+    filter: saturate(0.15) contrast(1.05) opacity(0.72);
+    transition: filter 0.3s ease;
+  }
+
+  .cell:hover .logo,
+  .cell:focus-within .logo {
+    filter: saturate(1) contrast(1) opacity(1);
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    text-align: center;
+  }
+
+  .name {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: var(--plum);
+  }
+
+  .years {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    font-variant-numeric: tabular-nums;
+    color: var(--faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .logo,
+    .cell {
+      transition: none;
+    }
+  }
+</style>

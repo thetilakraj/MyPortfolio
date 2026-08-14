@@ -129,7 +129,7 @@ const courses = [
     </div>
 
     <a
-      href={url('/Tilak-Raj-Resume-2026.pdf')}
+      href={url('/Tilak-Raj-Resume.pdf')}
       target="_blank"
       rel="noopener"
       class="inline-block shrink-0 rounded-[4px] bg-plum px-6 py-3 font-display text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white no-underline transition-colors hover:bg-ink"
@@ -216,31 +216,60 @@ const courses = [
   </section>
 
   <!-- =========================== RECOGNITION =========================== -->
-  <section class="mb-20 rounded-[8px] bg-pitch p-7 sm:p-10">
-    <p
-      class="mb-3 font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber-bright"
+  <section class="mb-20 overflow-hidden rounded-[8px] bg-pitch">
+    <div
+      class="grid items-center gap-x-10 gap-y-8 p-7 sm:p-10 lg:grid-cols-[minmax(0,22rem)_minmax(0,1fr)] lg:gap-x-12"
     >
-      Recognition
-    </p>
-    <h2
-      class="mb-4 max-w-[18ch] font-display text-[clamp(1.4rem,3vw,2rem)] font-black uppercase leading-[0.98] tracking-[-0.015em] text-[#f3eef6]"
-    >
-      Accenture Client &amp; Customer Award
-    </h2>
-    <p class="mb-8 max-w-[52ch] text-[0.95rem] leading-[1.75] text-[#b9afc2]">
-      Awarded in the team category for contribution to client business outcomes
-      — accelerating delivery toward Accenture's goal of adding a new Diamond
-      Client, December 2018.
-    </p>
-    <Image
-      src={award}
-      alt="Accenture Client and Customer Award certificate issued to Tilak Raj in the team category"
-      widths={[640, 1000, 1400]}
-      sizes="(min-width: 768px) 700px, 100vw"
-      loading="lazy"
-      class="w-full max-w-[42rem] rounded-[6px]"
-      style="box-shadow: var(--lift-lg)"
-    />
+      <div>
+        <p
+          class="mb-3 font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber-bright"
+        >
+          Recognition
+        </p>
+        <h2
+          class="mb-4 font-display text-[clamp(1.4rem,3vw,2rem)] font-black uppercase leading-[0.98] tracking-[-0.015em] text-[#f3eef6]"
+        >
+          Accenture Client &amp; Customer Award
+        </h2>
+        <p class="mb-5 text-[0.95rem] leading-[1.75] text-[#b9afc2]">
+          Awarded in the team category for contribution to client business
+          outcomes — accelerating delivery toward Accenture's goal of adding a
+          new Diamond Client.
+        </p>
+        <dl class="m-0 grid grid-cols-[max-content_1fr] gap-x-5 gap-y-1.5">
+          <dt
+            class="font-display text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#6b6275]"
+          >
+            Awarded
+          </dt>
+          <dd class="m-0 text-[0.85rem] text-[#e9e3ee]">December 2018</dd>
+          <dt
+            class="font-display text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#6b6275]"
+          >
+            Category
+          </dt>
+          <dd class="m-0 text-[0.85rem] text-[#e9e3ee]">Team</dd>
+          <dt
+            class="font-display text-[0.62rem] font-semibold uppercase tracking-[0.2em] text-[#6b6275]"
+          >
+            Issued by
+          </dt>
+          <dd class="m-0 text-[0.85rem] text-[#e9e3ee]">
+            Accenture Technology, India
+          </dd>
+        </dl>
+      </div>
+
+      <Image
+        src={award}
+        alt="Accenture Client and Customer Award certificate issued to Tilak Raj in the team category"
+        widths={[640, 1000, 1400]}
+        sizes="(min-width: 1024px) 620px, 100vw"
+        loading="lazy"
+        class="w-full rounded-[6px]"
+        style="box-shadow: var(--lift-lg)"
+      />
+    </div>
   </section>
 
   <!-- ============================ PAINTINGS ============================ -->

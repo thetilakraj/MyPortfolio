@@ -1,11 +1,9 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EmployerStrip from '../components/EmployerStrip.astro';
+import RadioEmbed from '../components/RadioEmbed.astro';
 import { url } from '../lib/url';
-
-import radioverseLive from '../assets/work/radioverse-live.jpg';
 
 const featured = (await getCollection('work'))
   .filter((entry) => entry.data.featured)
@@ -40,27 +38,9 @@ const statusLabel: Record<string, string> = {
       </p>
     </div>
 
-    <!-- The product itself, presented as the object it is. -->
+    <!-- The live app itself, embedded. -->
     <div class="mx-auto max-w-6xl px-6">
-      <figure class="m-0">
-        <div
-          class="overflow-hidden rounded-[10px] bg-pitch ring-1 ring-pitch-rule"
-          style="box-shadow: var(--lift-lg)"
-        >
-          <Image
-            src={radioverseLive}
-            alt="Radioverse running in production — a vinyl record seated in a dark turntable plinth, live station discovery listing 988 stations to the left, favourites and playlists to the right"
-            widths={[720, 1080, 1600, 1920]}
-            sizes="(min-width: 1152px) 1100px, 100vw"
-            loading="eager"
-            fetchpriority="high"
-            class="block w-full"
-          />
-        </div>
-        <figcaption class="eyebrow mt-4 text-center">
-          Radioverse, live in production — designed, built, and shipped solo
-        </figcaption>
-      </figure>
+      <RadioEmbed />
     </div>
   </section>
 

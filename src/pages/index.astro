@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EmployerStrip from '../components/EmployerStrip.astro';
-import RadioEmbed from '../components/RadioEmbed.astro';
+import RadioShowcase from '../components/RadioShowcase.astro';
 import { url } from '../lib/url';
 
 const featured = (await getCollection('work'))
@@ -38,9 +38,9 @@ const statusLabel: Record<string, string> = {
       </p>
     </div>
 
-    <!-- The live app itself, embedded. -->
+    <!-- The live product, shown and linked. -->
     <div class="mx-auto max-w-6xl px-6">
-      <RadioEmbed />
+      <RadioShowcase />
     </div>
   </section>
 

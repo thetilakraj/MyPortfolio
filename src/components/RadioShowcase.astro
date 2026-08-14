@@ -1,0 +1,224 @@
+---
+import { Image } from 'astro:assets';
+import radioverseLive from '../assets/work/radioverse-live.jpg';
+
+/**
+ * The hero: the live product, shown and linked.
+ *
+ * Not an iframe — listenradioverse.com sends `x-frame-options: DENY`, so no
+ * browser will render it in a frame from this origin. Rather than weaken the
+ * app's clickjacking protection to embed it, the whole panel is a link: the
+ * real running product, one click from the real running product.
+ */
+const APP_URL = 'https://listenradioverse.com';
+---
+
+<figure class="m-0">
+  <a
+    class="panel"
+    href={APP_URL}
+    target="_blank"
+    rel="noopener"
+    aria-label="Open Radioverse, live at listenradioverse.com, in a new tab"
+  >
+    <!-- browser chrome: frames the screenshot as a running app -->
+    <span class="bar">
+      <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="addr">listenradioverse.com</span>
+      <span class="pop">Open in a new tab &nearr;</span>
+    </span>
+
+    <span class="shot">
+      <Image
+        src={radioverseLive}
+        alt="Radioverse running in production — a vinyl record seated in a dark turntable plinth, live station discovery listing 988 stations to the left, favourites and playlists to the right"
+        widths={[720, 1080, 1600, 1920]}
+        sizes="(min-width: 1152px) 1100px, 100vw"
+        loading="eager"
+        fetchpriority="high"
+        class="img"
+      />
+      <span class="veil" aria-hidden="true"></span>
+      <span class="cta" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" /></svg>
+        Listen live
+      </span>
+    </span>
+  </a>
+
+  <figcaption class="cap">
+    Radioverse, live in production — designed, built, and shipped solo.
+  </figcaption>
+</figure>
+
+<style>
+  .panel {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--pitch);
+    box-shadow: var(--lift-lg);
+    text-decoration: none;
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s ease;
+  }
+
+  .panel:hover,
+  .panel:focus-visible {
+    transform: translateY(-3px);
+  }
+
+  /* ------------------------------------------------------------ chrome */
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.6rem 0.9rem;
+    background: #241f28;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .lights {
+    display: flex;
+    gap: 0.35rem;
+    flex: none;
+  }
+
+  .lights i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #3d3545;
+  }
+
+  .lights i:first-child {
+    background: color-mix(in oklab, var(--amber-bright) 70%, #3d3545);
+  }
+
+  .addr {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: #8f8599;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pop {
+    flex: none;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber-bright);
+    white-space: nowrap;
+  }
+
+  /* --------------------------------------------------------- the shot */
+  .shot {
+    position: relative;
+    display: block;
+    isolation: isolate;
+  }
+
+  .img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Darkens on hover so the call to action reads without hiding the app. */
+  .veil {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      60% 60% at 50% 50%,
+      rgba(18, 15, 22, 0.55),
+      rgba(18, 15, 22, 0.78)
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+
+  .cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.7rem 1.35rem;
+    border-radius: 999px;
+    background: var(--amber-bright);
+    color: #1a1119;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7);
+  }
+
+  .cta svg {
+    width: 0.95rem;
+    height: 0.95rem;
+    fill: currentColor;
+  }
+
+  .panel:hover .veil,
+  .panel:focus-visible .veil {
+    opacity: 1;
+  }
+
+  .panel:hover .cta,
+  .panel:focus-visible .cta {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .cap {
+    margin: 1rem 0 0;
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* Touch devices never hover — keep the CTA permanently visible instead. */
+  @media (hover: none) {
+    .cta {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      font-size: 0.68rem;
+      padding: 0.55rem 1rem;
+    }
+    .veil {
+      opacity: 0.55;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel,
+    .veil,
+    .cta {
+      transition: none;
+    }
+    .panel:hover,
+    .panel:focus-visible {
+      transform: none;
+    }
+  }
+</style>

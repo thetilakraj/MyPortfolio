@@ -1,94 +1,81 @@
 @import 'tailwindcss';
 
 /* ===========================================================================
-   Design system
+   Design system — "lavender and lamplight"
 
-   Two rules, both borrowed from systems already proven in Tilak's own products:
+   The palette is carried forward from the original site and taken seriously
+   rather than treated as template residue:
 
-   1. Signal-only accent (Radioverse). Amber marks state and emphasis — active
-      nav, current status, links, section numerals. Never decoration.
-   2. Typography with roles (Spellum). Serif carries editorial voice, sans
-      carries interface, mono carries identifiers and data. Three faces, three
-      jobs, no overlap.
+     #605768  the mauve that headed every section  → --plum, the brand colour
+     #d2c9d3  the lavender content panel           → --panel
+     #717981  the body grey                        → warmed toward plum
 
-   A third, also from Spellum: hairline borders replace elevation. There are no
-   drop shadows in this system; structure is drawn with 1px rules.
+   Two additions make it a system rather than a leftover:
 
-   Typefaces are system stacks on purpose. Spellum ships no custom font
-   dependency either — it buys zero network requests, no FOUT, and nothing to
-   go stale. The character comes from the setting, not the file.
+   1. A deep plum near-black (--pitch) for showcase panels. The product work is
+      dark and warm; dropping it onto lavender fails. Giving it its own ground
+      lets the page breathe between light and dark instead of flattening.
+   2. Amber (--amber), lifted from Radioverse's signal-only rule. It is the
+      warm complement of lavender, so the product imagery and the site agree
+      with each other instead of competing.
+
+   Committed single light art direction. No theme switching — every colour is
+   painted explicitly so the page renders identically whatever the viewer's
+   OS is set to.
+
+   Type is the original pairing, now self-hosted: Source Sans in black for
+   display, Merriweather light for reading.
 =========================================================================== */
 
 :root {
-  /* Neutral: cool-leaning greyscale. Deliberately not cream, not blue-grey. */
-  --paper: #f0f1f2;
-  --surface: #fafafb;
-  --surface-2: #e6e8ea;
-  --ink: #141619;
-  --ink-soft: #545a61;
-  --ink-faint: #868d95;
-  --rule: #d5d8dc;
-  --rule-soft: #e3e6e9;
+  --paper: #efebf1;
+  --panel: #ded6e1;
+  --panel-deep: #cbc1cf;
+  --surface: #fbfafc;
 
-  --signal: #9a5b10;
-  --signal-soft: #f4e7d5;
-  --signal-ink: #ffffff;
+  --pitch: #1e1922;
+  --pitch-2: #2a2430;
+  --pitch-rule: #3d3545;
 
-  --font-serif: ui-serif, 'New York', 'Iowan Old Style', Georgia, serif;
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', system-ui,
-    sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, 'Cascadia Mono', monospace;
-}
+  --ink: #322b38;
+  --plum: #605768;
+  --muted: #6e6675;
+  --faint: #948ca0;
+  --rule: #c9bfce;
+  --rule-soft: #ddd5e0;
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --paper: #121315;
-    --surface: #191b1e;
-    --surface-2: #22262a;
-    --ink: #e7e9ec;
-    --ink-soft: #9aa2ab;
-    --ink-faint: #6d757e;
-    --rule: #2a2e33;
-    --rule-soft: #212529;
+  --amber: #a4640f;
+  --amber-bright: #e0a33f;
+  --amber-ink: #ffffff;
 
-    --signal: #e5a244;
-    --signal-soft: #37280f;
-    --signal-ink: #121315;
-  }
-}
+  --serif: var(--font-merriweather), Georgia, serif;
+  --display: var(--font-source), 'Helvetica Neue', Helvetica, sans-serif;
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
 
-:root[data-theme='dark'] {
-  --paper: #121315;
-  --surface: #191b1e;
-  --surface-2: #22262a;
-  --ink: #e7e9ec;
-  --ink-soft: #9aa2ab;
-  --ink-faint: #6d757e;
-  --rule: #2a2e33;
-  --rule-soft: #212529;
-
-  --signal: #e5a244;
-  --signal-soft: #37280f;
-  --signal-ink: #121315;
+  --lift: 0 1px 2px rgba(48, 40, 56, 0.06), 0 12px 32px -14px rgba(48, 40, 56, 0.28);
+  --lift-lg: 0 2px 6px rgba(30, 25, 34, 0.1), 0 40px 80px -32px rgba(30, 25, 34, 0.45);
 }
 
 @theme inline {
   --color-paper: var(--paper);
+  --color-panel: var(--panel);
+  --color-panel-deep: var(--panel-deep);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
+  --color-pitch: var(--pitch);
+  --color-pitch-2: var(--pitch-2);
+  --color-pitch-rule: var(--pitch-rule);
   --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-ink-faint: var(--ink-faint);
+  --color-plum: var(--plum);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
   --color-rule: var(--rule);
   --color-rule-soft: var(--rule-soft);
-  --color-signal: var(--signal);
-  --color-signal-soft: var(--signal-soft);
-  --color-signal-ink: var(--signal-ink);
+  --color-amber: var(--amber);
+  --color-amber-bright: var(--amber-bright);
 
-  --font-serif: var(--font-serif);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --font-serif: var(--serif);
+  --font-display: var(--display);
+  --font-mono: var(--mono);
 }
 
 /* --------------------------------------------------------------------- base */
@@ -99,67 +86,122 @@ html {
 }
 
 body {
-  /* The host paints its own ground; never leave this transparent. */
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 1.0625rem;
+  line-height: 1.75;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 :focus-visible {
-  outline: 2px solid var(--signal);
+  outline: 2px solid var(--amber);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
 ::selection {
-  background: var(--signal-soft);
-  color: var(--ink);
+  background: var(--plum);
+  color: #fff;
 }
 
-/* ------------------------------------------------------------- type helpers */
+/* ---------------------------------------------------------------- type roles */
 
-/* Mono label: section headers, metadata keys, status. */
-.label {
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  font-weight: 500;
-}
+/* These live in @layer components on purpose. Unlayered CSS beats Tailwind's
+   utility layer, so an unlayered `.display { color }` would silently defeat
+   every `text-*` utility placed on the same element. Inside `components`,
+   utilities win — which is what per-element overrides need. */
+@layer components {
 
-/* Display: the homepage claim and case-study titles. */
+/* Display: Source Sans black, uppercase, tightened. The original site's
+   signature voice, given a proper scale. */
 .display {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.022em;
-  line-height: 1.06;
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 0.94;
+  color: var(--plum);
   text-wrap: balance;
 }
 
-.title {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  line-height: 1.14;
-  text-wrap: balance;
+.display-xl {
+  font-size: clamp(2.75rem, 8vw, 6rem);
+}
+
+.display-lg {
+  font-size: clamp(2.25rem, 5.5vw, 4rem);
+}
+
+.display-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+/* Eyebrow: small, spaced, uppercase. Structural marker. */
+.eyebrow {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--faint);
 }
 
 .lede {
   font-size: 1.1875rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
+  line-height: 1.7;
+  color: var(--muted);
+  font-style: italic;
   text-wrap: pretty;
+}
+
+.on-pitch {
+  color: #e9e3ee;
+}
+
+.on-pitch .display {
+  color: #f3eef6;
+}
+
+.on-pitch .eyebrow {
+  color: var(--amber-bright);
+}
+
+.on-pitch .lede {
+  color: #b9afc2;
+}
+
+} /* end @layer components */
+
+/* ---------------------------------------------------------- decorative field */
+
+/* A soft lavender bloom — the descendant of the original "blob" shapes,
+   rebuilt as gradients so it costs nothing and scales cleanly. */
+.bloom {
+  position: relative;
+  isolation: isolate;
+}
+
+.bloom::before {
+  content: '';
+  position: absolute;
+  /* Must not exceed the container horizontally — negative left/right insets
+     here push past the viewport and give the whole page a horizontal scroll.
+     The gradients already fade to transparent, so 0 is enough. */
+  inset: -10% 0 auto 0;
+  height: 75%;
+  z-index: -1;
+  background:
+    radial-gradient(50% 60% at 18% 30%, rgba(160, 138, 175, 0.32), transparent 70%),
+    radial-gradient(45% 55% at 82% 12%, rgba(224, 163, 63, 0.16), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
 }
 
 /* ------------------------------------------------------------- case studies */
 
-/* The six-part spine is a genuine sequence, so the numerals encode order
-   rather than decorate. They sit in the left rail on wide screens. */
 .spine {
   counter-reset: spine;
 }
@@ -167,50 +209,54 @@ body {
 .spine > h2 {
   counter-increment: spine;
   position: relative;
-  font-family: var(--font-serif);
+  font-family: var(--display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
   font-size: 1.4rem;
-  font-weight: 500;
-  letter-spacing: -0.012em;
-  line-height: 1.25;
-  margin: 3rem 0 1rem;
-  padding-top: 1.25rem;
+  line-height: 1.15;
+  color: var(--plum);
+  margin: 3.25rem 0 1.1rem;
+  padding-top: 1.4rem;
   border-top: 1px solid var(--rule);
 }
 
 .spine > h2::before {
   content: counter(spine, decimal-leading-zero);
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 0.6875rem;
   letter-spacing: 0.12em;
-  color: var(--signal);
+  color: var(--amber);
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Pull the numeral into the gutter only once the metadata rail exists (lg).
-   The gutter is 4rem, so the offset must stay inside it or the numeral
-   collides with the rail. */
+   The gutter is 4rem, so the offset must stay inside it. */
 @media (min-width: 64rem) {
   .spine > h2::before {
     position: absolute;
     left: -3.25rem;
-    top: 1.6rem;
+    top: 1.75rem;
     margin: 0;
   }
 }
 
 .spine > h3 {
-  font-family: var(--font-sans);
-  font-size: 0.9375rem;
-  font-weight: 650;
-  margin: 1.75rem 0 0.5rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin: 2rem 0 0.5rem;
 }
 
 .spine > p,
 .spine > ul,
 .spine > ol {
-  margin: 0 0 1.05rem;
-  max-width: 34rem;
+  margin: 0 0 1.15rem;
+  max-width: 36rem;
+  color: var(--muted);
 }
 
 .spine > ul,
@@ -219,44 +265,46 @@ body {
 }
 
 .spine li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
 .spine li::marker {
-  color: var(--ink-faint);
+  color: var(--faint);
 }
 
 .spine strong {
-  font-weight: 640;
+  font-weight: 700;
+  color: var(--ink);
 }
 
 .spine em {
-  color: var(--ink-soft);
+  color: var(--plum);
 }
 
 .spine a {
-  color: var(--signal);
+  color: var(--amber);
   text-underline-offset: 3px;
 }
 
 .spine code {
-  font-family: var(--font-mono);
+  font-family: var(--mono);
   font-size: 0.85em;
-  background: var(--surface-2);
+  background: var(--panel);
   padding: 0.1em 0.36em;
   border-radius: 3px;
 }
 
-/* Blockquote as an aside — used for design rules quoted from the products. */
 .spine blockquote {
-  margin: 1.5rem 0;
-  padding-left: 1.1rem;
-  border-left: 2px solid var(--signal);
-  font-family: var(--font-serif);
+  margin: 1.75rem 0;
+  padding: 1.15rem 1.4rem;
+  border-left: 3px solid var(--amber);
+  background: var(--panel);
+  border-radius: 0 4px 4px 0;
   font-size: 1.0625rem;
-  line-height: 1.5;
+  line-height: 1.65;
   color: var(--ink);
-  max-width: 34rem;
+  max-width: 36rem;
+  font-style: italic;
 }
 
 .spine blockquote p {

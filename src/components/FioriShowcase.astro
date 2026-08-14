@@ -1,0 +1,139 @@
+---
+import { Image } from 'astro:assets';
+import fiori from '../assets/work/fiori-launchpad.png';
+---
+
+<!--
+  A descendant of the original site's rotating "blob" backdrop, rebuilt: the
+  four blob PNGs are now CSS shapes in the current palette, so they recolour
+  with the theme, scale without artefacts, and weigh nothing.
+-->
+<figure class="fiori m-0">
+  <div class="fiori-stage">
+    <span class="blob blob-1" aria-hidden="true"></span>
+    <span class="blob blob-2" aria-hidden="true"></span>
+    <span class="blob blob-3" aria-hidden="true"></span>
+    <span class="blob blob-4" aria-hidden="true"></span>
+
+    <Image
+      src={fiori}
+      alt="An SAP Fiori launchpad — tiles, analytical cards, and a feed rendered across desktop, tablet and phone"
+      widths={[560, 900, 1268]}
+      sizes="(min-width: 1024px) 700px, 100vw"
+      loading="lazy"
+      class="fiori-img"
+    />
+  </div>
+  <figcaption class="eyebrow mt-5 text-center">
+    The launchpad — where every enterprise app I shipped had to live
+  </figcaption>
+</figure>
+
+<style>
+  .fiori-stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: clamp(2rem, 6vw, 4.5rem) clamp(1rem, 4vw, 3rem);
+    isolation: isolate;
+    /* The blobs rotate past the edges; clip so they never push page width. */
+    overflow: hidden;
+    border-radius: 10px;
+    /* The artwork is a transparent PNG of pale device screens — it disappears
+       on a light ground, so the stage is dark and the blobs glow behind it. */
+    background:
+      radial-gradient(120% 110% at 50% 0%, var(--pitch-2) 0%, var(--pitch) 72%);
+  }
+
+  .blob {
+    position: absolute;
+    z-index: -1;
+    display: block;
+    filter: blur(26px);
+    opacity: 0.42;
+    will-change: transform;
+  }
+
+  .blob-1 {
+    width: 46%;
+    aspect-ratio: 1;
+    top: -8%;
+    left: 2%;
+    background: color-mix(in oklab, var(--plum) 55%, transparent);
+    border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%;
+    animation: drift-a 34s linear infinite;
+  }
+
+  .blob-2 {
+    width: 38%;
+    aspect-ratio: 1;
+    top: 14%;
+    right: -4%;
+    background: color-mix(in oklab, var(--amber-bright) 42%, transparent);
+    border-radius: 63% 37% 41% 59% / 55% 62% 38% 45%;
+    animation: drift-b 27s linear infinite;
+  }
+
+  .blob-3 {
+    width: 42%;
+    aspect-ratio: 1;
+    bottom: -10%;
+    left: 14%;
+    background: color-mix(in oklab, var(--panel-deep) 85%, transparent);
+    border-radius: 55% 45% 36% 64% / 48% 39% 61% 52%;
+    animation: drift-a 41s linear infinite reverse;
+  }
+
+  .blob-4 {
+    width: 30%;
+    aspect-ratio: 1;
+    bottom: 6%;
+    right: 10%;
+    background: color-mix(in oklab, var(--plum) 35%, transparent);
+    border-radius: 38% 62% 57% 43% / 60% 41% 59% 40%;
+    animation: drift-b 48s linear infinite reverse;
+  }
+
+  .fiori-img {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 46rem;
+    height: auto;
+    /* drop-shadow follows the PNG's alpha; box-shadow would draw a rectangle
+       around the transparent bounding box instead of around the devices. */
+    filter:
+      drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45))
+      drop-shadow(0 28px 44px rgba(0, 0, 0, 0.55));
+  }
+
+  @keyframes drift-a {
+    from {
+      transform: rotate(0deg) scale(1);
+    }
+    50% {
+      transform: rotate(180deg) scale(1.08);
+    }
+    to {
+      transform: rotate(360deg) scale(1);
+    }
+  }
+
+  @keyframes drift-b {
+    from {
+      transform: rotate(0deg) scale(1.05);
+    }
+    50% {
+      transform: rotate(-180deg) scale(0.95);
+    }
+    to {
+      transform: rotate(-360deg) scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob {
+      animation: none !important;
+    }
+  }
+</style>

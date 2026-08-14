@@ -27,7 +27,7 @@ const {
 
 const statusLabel =
   {
-    live: 'Live',
+    live: 'Live in production',
     'in-development': 'In development',
     'in-progress': 'In progress',
     delivered: 'Delivered',
@@ -44,38 +44,50 @@ const period = end
 const attribution = vehicle ?? employer;
 ---
 
-<article class="border-t border-rule">
+<article>
   <a
     href={url(`/work/${id}`)}
-    class="group grid gap-x-8 gap-y-2 py-7 no-underline sm:grid-cols-[7rem_1fr]"
+    class="group block rounded-[8px] border border-rule bg-surface p-7 no-underline transition-transform duration-300 hover:-translate-y-0.5 sm:p-9"
+    style="box-shadow: var(--lift)"
   >
-    <div class="flex flex-col gap-1">
-      <span class="label tabular-nums">{period}</span>
-      <span class="label text-signal">{statusLabel}</span>
-    </div>
-
-    <div>
-      <h3
-        class="title mb-1.5 text-[1.5rem] text-ink transition-colors group-hover:text-signal"
+    <div class="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+      <span
+        class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-amber"
+        >{statusLabel}</span
       >
-        {title}
-      </h3>
-
-      <p class="mb-3 max-w-[38rem] text-ink-soft">{summary}</p>
-
-      <div
-        class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.6875rem] text-ink-faint"
+      <span class="text-[0.7rem] text-faint" aria-hidden="true">·</span>
+      <span
+        class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-faint tabular-nums"
+        >{period}</span
       >
-        {attribution && <span>{attribution}</span>}
-        {
-          attribution && stack.length > 0 && (
-            <span aria-hidden="true" class="text-rule">
-              |
+      {
+        attribution && (
+          <>
+            <span class="text-[0.7rem] text-faint" aria-hidden="true">
+              ·
             </span>
-          )
-        }
-        {stack.length > 0 && <span>{stack.join(' · ')}</span>}
-      </div>
+            <span class="font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-faint">
+              {attribution}
+            </span>
+          </>
+        )
+      }
     </div>
+
+    <h3 class="display display-md mb-3 transition-colors group-hover:text-amber">
+      {title}
+    </h3>
+
+    <p class="max-w-[54ch] text-[1.0625rem] leading-[1.7] text-muted">
+      {summary}
+    </p>
+
+    {
+      stack.length > 0 && (
+        <p class="mt-5 font-mono text-[0.6875rem] tracking-wide text-faint">
+          {stack.join('  ·  ')}
+        </p>
+      )
+    }
   </a>
 </article>

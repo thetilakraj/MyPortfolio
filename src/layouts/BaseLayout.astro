@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { url } from '../lib/url';
@@ -7,11 +8,12 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
-  /** Page-specific share image, relative to the site root. */
   image?: string;
+  /** Wide pages (the homepage) manage their own container. */
+  bare?: boolean;
 }
 
-const { title, description, image } = Astro.props;
+const { title, description, image, bare = false } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(url(image ?? '/og-default.png'), Astro.site).href;
@@ -27,6 +29,10 @@ const ogImage = new URL(url(image ?? '/og-default.png'), Astro.site).href;
     <meta name="author" content="Tilak Raj" />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={url('/favicon.ico')} sizes="any" />
+    <meta name="theme-color" content="#efebf1" />
+
+    <Font cssVariable="--font-merriweather" preload />
+    <Font cssVariable="--font-source" preload />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Tilak Raj" />
@@ -42,16 +48,24 @@ const ogImage = new URL(url(image ?? '/og-default.png'), Astro.site).href;
   <body class="min-h-screen">
     <a
       href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:rounded focus:bg-signal focus:px-3 focus:py-2 focus:text-signal-ink"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-plum focus:px-3 focus:py-2 focus:text-white"
     >
       Skip to content
     </a>
 
     <SiteHeader />
 
-    <main id="main" class="mx-auto max-w-4xl px-6 py-12">
-      <slot />
-    </main>
+    {
+      bare ? (
+        <main id="main">
+          <slot />
+        </main>
+      ) : (
+        <main id="main" class="mx-auto max-w-5xl px-6 py-14">
+          <slot />
+        </main>
+      )
+    }
 
     <SiteFooter />
   </body>

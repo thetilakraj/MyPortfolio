@@ -1,70 +1,200 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import WorkRow from '../components/WorkRow.astro';
+import EmployerStrip from '../components/EmployerStrip.astro';
 import { url } from '../lib/url';
+
+import radioverseLive from '../assets/work/radioverse-live.jpg';
 
 const featured = (await getCollection('work'))
   .filter((entry) => entry.data.featured)
   .sort((a, b) => a.data.order - b.data.order);
+
+const statusLabel: Record<string, string> = {
+  live: 'Live in production',
+  'in-development': 'In development',
+  'in-progress': 'In progress',
+  delivered: 'Delivered',
+  archived: 'Archived',
+};
+
 ---
 
 <BaseLayout
+  bare
   title="Tilak Raj — SAP BTP Lead Consultant & Product Designer"
   description="Ten years designing and building software inside hard constraints — enterprise SAP delivery by day, independent consumer products by night."
 >
-  <!-- The claim. Left-aligned, no photo, no centred hero. -->
-  <section class="pt-6 pb-20 sm:pt-14">
-    <h1 class="display max-w-[19ch] text-[2.6rem] sm:text-[3.5rem]">
-      Ten years shipping software inside hard constraints.
-    </h1>
-    <p class="lede mt-6 max-w-[46ch]">
-      First someone else's. Now also my own.
-    </p>
-  </section>
+  <!-- ============================== HERO ============================== -->
+  <section class="bloom">
+    <div class="mx-auto max-w-5xl px-6 pt-16 pb-10 sm:pt-24">
+      <p class="eyebrow mb-6">Toronto · SAP BTP Lead Consultant</p>
 
-  <!-- The two pillars, expressed structurally as two columns. -->
-  <section class="grid gap-x-12 gap-y-10 border-t border-rule pt-10 sm:grid-cols-2">
-    <div>
-      <p class="label mb-3">By day</p>
-      <p class="max-w-[38ch] text-ink">
-        I lead the technical delivery of an enterprise SAP BTP platform toward
-        production launch, across multiple vendor teams — readiness, code
-        review, QA strategy, and the launch itself.
-      </p>
-      <p class="mt-3 text-sm text-ink-soft">
-        Technical Lead, Chicken Farmers of Ontario
+      <h1 class="display display-xl max-w-[14ch]">
+        Ten years inside hard constraints
+      </h1>
+
+      <p class="lede mt-8 max-w-[44ch]">
+        First someone else's. Now also my own.
       </p>
     </div>
 
-    <div>
-      <p class="label mb-3">Nights and weekends</p>
-      <p class="max-w-[38ch] text-ink">
-        I design, build, and ship consumer products end to end — research,
-        design system, engineering, billing, release. No handoffs, because
-        there's no one to hand off to.
-      </p>
-      <p class="mt-3 text-sm text-ink-soft">TritSync Incorp Inc.</p>
+    <!-- The product itself, presented as the object it is. -->
+    <div class="mx-auto max-w-6xl px-6">
+      <figure class="m-0">
+        <div
+          class="overflow-hidden rounded-[10px] bg-pitch ring-1 ring-pitch-rule"
+          style="box-shadow: var(--lift-lg)"
+        >
+          <Image
+            src={radioverseLive}
+            alt="Radioverse running in production — a vinyl record seated in a dark turntable plinth, live station discovery listing 988 stations to the left, favourites and playlists to the right"
+            widths={[720, 1080, 1600, 1920]}
+            sizes="(min-width: 1152px) 1100px, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            class="block w-full"
+          />
+        </div>
+        <figcaption class="eyebrow mt-4 text-center">
+          Radioverse, live in production — designed, built, and shipped solo
+        </figcaption>
+      </figure>
     </div>
   </section>
 
-  <section class="mt-14 border-t border-rule pt-4">
-    <p class="max-w-[58ch] text-ink-soft">
+  <!-- ============================ PILLARS ============================= -->
+  <section class="mx-auto max-w-5xl px-6 pt-24">
+    <div class="grid gap-x-16 gap-y-12 sm:grid-cols-2">
+      <div>
+        <p class="eyebrow mb-4">By day</p>
+        <p class="text-[1.0625rem] leading-[1.75] text-ink">
+          I lead the technical delivery of an enterprise SAP BTP platform toward
+          production launch, across multiple vendor teams — readiness, code
+          review, QA strategy, and the launch itself.
+        </p>
+        <p class="mt-4 text-sm italic text-muted">
+          Technical Lead, Chicken Farmers of Ontario
+        </p>
+      </div>
+
+      <div>
+        <p class="eyebrow mb-4">Nights and weekends</p>
+        <p class="text-[1.0625rem] leading-[1.75] text-ink">
+          I design, build, and ship consumer products end to end — research,
+          design system, engineering, billing, release. No handoffs, because
+          there's no one to hand off to.
+        </p>
+        <p class="mt-4 text-sm italic text-muted">TritSync Incorp Inc.</p>
+      </div>
+    </div>
+
+    <p
+      class="mt-16 max-w-[62ch] border-t border-rule pt-8 text-[1.0625rem] leading-[1.8] text-muted"
+    >
       The discipline is the same on both sides. Enterprise work hands you a
       design language, hard business rules, and no permission to freelance. I
-      spent a decade delivering inside that — then wrote stricter constraints
-      for myself when nobody was making me.
+      spent a decade delivering inside that — then wrote
+      <em class="not-italic font-normal text-plum">stricter</em> constraints for
+      myself when nobody was making me.
     </p>
   </section>
 
-  <!-- Selected work as an index, not a card grid. -->
-  <section class="mt-24">
-    <h2 class="label mb-2">Selected work</h2>
-    {featured.map((entry) => <WorkRow id={entry.id} {...entry.data} />)}
-    <p class="mt-8 border-t border-rule pt-6">
-      <a href={url('/work')} class="text-signal no-underline hover:underline"
+  <!-- ========================== SELECTED WORK ========================= -->
+  <section class="mx-auto max-w-5xl px-6 pt-28">
+    <h2 class="display display-md mb-10">Selected work</h2>
+
+    <div class="grid gap-6">
+      {
+        featured.map((entry, i) => (
+          <a
+            href={url(`/work/${entry.id}`)}
+            class:list={[
+              'group relative block overflow-hidden rounded-[8px] no-underline transition-transform duration-300 hover:-translate-y-0.5',
+              i === 0
+                ? 'bg-pitch text-[#e9e3ee]'
+                : 'border border-rule bg-surface',
+            ]}
+            style={i === 0 ? 'box-shadow: var(--lift-lg)' : 'box-shadow: var(--lift)'}
+          >
+            <div class="p-8 sm:p-10">
+              <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <span
+                  class:list={[
+                    'font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em]',
+                    i === 0 ? 'text-amber-bright' : 'text-amber',
+                  ]}
+                >
+                  {statusLabel[entry.data.status] ?? entry.data.status}
+                </span>
+                <span
+                  class:list={[
+                    'text-[0.7rem]',
+                    i === 0 ? 'text-[#6b6275]' : 'text-faint',
+                  ]}
+                  aria-hidden="true"
+                >
+                  ·
+                </span>
+                <span
+                  class:list={[
+                    'font-display text-[0.7rem] font-semibold uppercase tracking-[0.22em]',
+                    i === 0 ? 'text-[#8f8599]' : 'text-faint',
+                  ]}
+                >
+                  {entry.data.vehicle ?? entry.data.employer}
+                </span>
+              </div>
+
+              <h3
+                class:list={[
+                  'display display-md mb-3 transition-colors',
+                  i === 0
+                    ? 'text-[#f3eef6] group-hover:text-amber-bright'
+                    : 'group-hover:text-amber',
+                ]}
+              >
+                {entry.data.title}
+              </h3>
+
+              <p
+                class:list={[
+                  'max-w-[52ch] text-[1.0625rem] leading-[1.7]',
+                  i === 0 ? 'text-[#b9afc2]' : 'text-muted',
+                ]}
+              >
+                {entry.data.summary}
+              </p>
+
+              {entry.data.stack.length > 0 && (
+                <p
+                  class:list={[
+                    'mt-6 font-mono text-[0.6875rem] tracking-wide',
+                    i === 0 ? 'text-[#6b6275]' : 'text-faint',
+                  ]}
+                >
+                  {entry.data.stack.join('  ·  ')}
+                </p>
+              )}
+            </div>
+          </a>
+        ))
+      }
+    </div>
+
+    <p class="mt-10">
+      <a
+        href={url('/work')}
+        class="font-display text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-amber no-underline hover:underline"
         >All work &rarr;</a
       >
     </p>
+  </section>
+
+  <!-- =========================== EMPLOYERS =========================== -->
+  <section class="mx-auto max-w-5xl px-6 pt-28">
+    <p class="eyebrow mb-6">A decade of delivery at</p>
+    <EmployerStrip />
   </section>
 </BaseLayout>

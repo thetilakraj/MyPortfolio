@@ -1,0 +1,359 @@
+<svg viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vinyl deck aesthetic study v2">
+  <!--
+    AESTHETIC STUDY v2 — texture pass
+    Changes over v1:
+      • Deck warmed to a neutral-to-slightly-warm charcoal (was cool gray)
+      • New "leatherette" pebble texture filter on the deck surface
+      • Removed inner-panel outline (target has one continuous surface)
+      • Vinyl: 4 overlapping ambient highlights instead of 1 diagonal sweep
+      • Vinyl: outer edge bright ring + inner label edge highlight
+      • Hardware shifted from gunmetal to polished chrome gradients
+      • Knob and slider thumb darker/simpler (target reads more restrained)
+  -->
+  <defs>
+
+    <!-- ===== AMBIENT BACKDROP ===== -->
+    <radialGradient id="ambient" cx="50%" cy="35%" r="90%">
+      <stop offset="0%"   stop-color="#0e0d0c"/>
+      <stop offset="55%"  stop-color="#060605"/>
+      <stop offset="100%" stop-color="#020202"/>
+    </radialGradient>
+
+    <!-- ===== DECK BODY =====
+         Warmer black with the lightest stop pulled toward #1d1b18 (a hair
+         of warmth) rather than #23232a (cool). The shadows still go
+         neutral so we don't read "brown" — just "lit by warm room light." -->
+    <linearGradient id="deckBody" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#1f1d1a"/>
+      <stop offset="22%"  stop-color="#181614"/>
+      <stop offset="60%"  stop-color="#0f0e0d"/>
+      <stop offset="100%" stop-color="#080807"/>
+    </linearGradient>
+
+    <!-- Top-edge specular line: thin, soft, fading.
+         This is the single biggest "lit from above" cue. -->
+    <linearGradient id="deckTopEdge" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%"   stop-color="#3a3833" stop-opacity="0.85"/>
+      <stop offset="35%"  stop-color="#1f1d1a" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Vignette toward the edges of the deck, sells weight + ambient -->
+    <radialGradient id="deckVignette" cx="50%" cy="50%" r="65%">
+      <stop offset="60%"  stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+
+    <!-- ===== PLATTER ===== -->
+    <radialGradient id="platterRecess" cx="50%" cy="50%" r="50%">
+      <stop offset="82%"  stop-color="#000000" stop-opacity="0"/>
+      <stop offset="96%"  stop-color="#000000" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.95"/>
+    </radialGradient>
+
+    <radialGradient id="platterSurface" cx="46%" cy="40%" r="62%">
+      <stop offset="0%"   stop-color="#26241f"/>
+      <stop offset="55%"  stop-color="#161412"/>
+      <stop offset="100%" stop-color="#080706"/>
+    </radialGradient>
+
+    <!-- ===== VINYL ===== -->
+    <radialGradient id="vinylBase" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#1c1c1e"/>
+      <stop offset="50%"  stop-color="#0d0d0f"/>
+      <stop offset="100%" stop-color="#030304"/>
+    </radialGradient>
+
+    <!-- Ambient highlight: light from above. Center pulled up above the
+         vinyl so we get a soft crescent of light on the top half. -->
+    <radialGradient id="vinylTopLight" cx="50%" cy="-10%" r="85%">
+      <stop offset="0%"   stop-color="#6c6a68" stop-opacity="0.35"/>
+      <stop offset="40%"  stop-color="#3a3937" stop-opacity="0.18"/>
+      <stop offset="75%"  stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Top-right specular crescent (the strongest highlight) -->
+    <radialGradient id="vinylHi1" cx="78%" cy="18%" r="55%">
+      <stop offset="0%"   stop-color="#9a9894" stop-opacity="0.35"/>
+      <stop offset="30%"  stop-color="#4a4945" stop-opacity="0.18"/>
+      <stop offset="70%"  stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Bottom-left specular crescent (subtle counter-light) -->
+    <radialGradient id="vinylHi2" cx="22%" cy="82%" r="60%">
+      <stop offset="0%"   stop-color="#6a6864" stop-opacity="0.20"/>
+      <stop offset="50%"  stop-color="#1c1c1e" stop-opacity="0.08"/>
+      <stop offset="80%"  stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Top-left soft fill -->
+    <radialGradient id="vinylHi3" cx="20%" cy="22%" r="50%">
+      <stop offset="0%"   stop-color="#56544f" stop-opacity="0.18"/>
+      <stop offset="60%"  stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Edge catch — bright ring just inside the outer rim -->
+    <radialGradient id="vinylEdgeCatch" cx="50%" cy="50%" r="50%">
+      <stop offset="95%"  stop-color="#5a5854" stop-opacity="0"/>
+      <stop offset="98%"  stop-color="#7a7874" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#1a1a1c" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- ===== LABEL (painterly atmospheric) ===== -->
+    <radialGradient id="labelArt" cx="48%" cy="42%" r="70%">
+      <stop offset="0%"   stop-color="#e87d35"/>
+      <stop offset="25%"  stop-color="#c8581a"/>
+      <stop offset="55%"  stop-color="#7c2c10"/>
+      <stop offset="85%"  stop-color="#2a0d04"/>
+      <stop offset="100%" stop-color="#120602"/>
+    </radialGradient>
+
+    <!-- ===== HARDWARE: POLISHED CHROME =====
+         Tonearm tubes: cylinder gradient where the center is BRIGHT
+         (chrome), edges go dark. The brightness band is the key tell;
+         gunmetal stays muddy in the middle, chrome catches the room. -->
+    <linearGradient id="chromeCylinder" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#1c1c1f"/>
+      <stop offset="22%"  stop-color="#6e6e74"/>
+      <stop offset="40%"  stop-color="#b6b6bc"/>
+      <stop offset="50%"  stop-color="#d8d8de"/>
+      <stop offset="60%"  stop-color="#b6b6bc"/>
+      <stop offset="78%"  stop-color="#6e6e74"/>
+      <stop offset="100%" stop-color="#1c1c1f"/>
+    </linearGradient>
+
+    <!-- Polished chrome knob/disk face. Hot spot off-center top-left. -->
+    <radialGradient id="chromeDisk" cx="34%" cy="28%" r="78%">
+      <stop offset="0%"   stop-color="#b8b8be"/>
+      <stop offset="22%"  stop-color="#7c7c84"/>
+      <stop offset="55%"  stop-color="#42424a"/>
+      <stop offset="85%"  stop-color="#1a1a1e"/>
+      <stop offset="100%" stop-color="#0a0a0c"/>
+    </radialGradient>
+
+    <!-- A darker matte version for things that should NOT shine
+         (cartridge body, slider thumb, power knob center) -->
+    <radialGradient id="matteSteel" cx="40%" cy="30%" r="75%">
+      <stop offset="0%"   stop-color="#3c3c42"/>
+      <stop offset="55%"  stop-color="#22222a"/>
+      <stop offset="100%" stop-color="#0c0c10"/>
+    </radialGradient>
+
+    <!-- Recessed slot (warmth in trough, dark at edges) -->
+    <linearGradient id="recessedSlot" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#020202"/>
+      <stop offset="50%"  stop-color="#0c0a08"/>
+      <stop offset="100%" stop-color="#020202"/>
+    </linearGradient>
+
+    <!-- ===== FILTERS ===== -->
+
+    <!-- LEATHERETTE / book-cloth pebble texture
+         baseFrequency 0.42 = mid-scale grain (visible as "fabric")
+         3 octaves for organic variation, multiplied at low alpha -->
+    <filter id="leatherette" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.42" numOctaves="3" seed="11" result="noise"/>
+      <feColorMatrix in="noise" values="0 0 0 0 0
+                                        0 0 0 0 0
+                                        0 0 0 0 0
+                                        0 0 0 0.22 0"/>
+    </filter>
+
+    <!-- Fine micro-grain over everything — kills plastic flatness -->
+    <filter id="microGrain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="1.1" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 0 0
+                             0 0 0 0.045 0"/>
+    </filter>
+
+    <!-- Soft drop shadow -->
+    <filter id="liftShadow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7"/>
+      <feOffset dx="0" dy="5"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.55"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Warm orange glow for the power indicator -->
+    <filter id="warmGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feFlood flood-color="#f97316" flood-opacity="0.6"/>
+      <feComposite in2="b" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Clip to vinyl shape, used for highlight overlays -->
+    <clipPath id="vinylClip">
+      <circle cx="600" cy="450" r="278"/>
+    </clipPath>
+
+  </defs>
+
+  <!-- ====== SCENE ====== -->
+
+  <!-- Backdrop -->
+  <rect width="1400" height="900" fill="url(#ambient)"/>
+
+  <!-- Deck base (warm matte) -->
+  <rect x="90" y="115" width="1220" height="680" rx="26" fill="#000" opacity="0.7" filter="url(#liftShadow)"/>
+  <rect x="90" y="110" width="1220" height="680" rx="26" fill="url(#deckBody)"/>
+
+  <!-- LEATHERETTE TEXTURE LAYER — clipped to the deck shape.
+       This is what gives the surface the book-cloth feel. -->
+  <g clip-path="inset(0 round 26px)">
+    <rect x="90" y="110" width="1220" height="680" rx="26"
+          fill="#000" filter="url(#leatherette)" opacity="0.55"
+          style="mix-blend-mode: overlay"/>
+  </g>
+
+  <!-- Edge vignette on deck -->
+  <rect x="90" y="110" width="1220" height="680" rx="26" fill="url(#deckVignette)"/>
+
+  <!-- Top edge specular (lit from above) -->
+  <rect x="90" y="110" width="1220" height="680" rx="26"
+        fill="none" stroke="url(#deckTopEdge)" stroke-width="1.5"/>
+
+  <!-- Corner screws -->
+  <defs>
+    <symbol id="screw" overflow="visible">
+      <circle r="9"  fill="#000" opacity="0.75"/>
+      <circle r="7"  fill="url(#chromeDisk)"/>
+      <circle r="7"  fill="none" stroke="#000" stroke-opacity="0.5" stroke-width="0.5"/>
+      <line x1="-4" y1="-1.2" x2="4" y2="1.2" stroke="#000" stroke-opacity="0.8" stroke-width="1"/>
+    </symbol>
+  </defs>
+  <use href="#screw" x="135"  y="155"/>
+  <use href="#screw" x="1265" y="155"/>
+  <use href="#screw" x="135"  y="745"/>
+  <use href="#screw" x="1265" y="745"/>
+
+  <!-- ====== PLATTER + VINYL ====== -->
+  <g transform="translate(600, 450)">
+    <!-- Recess + rim -->
+    <circle r="316" fill="url(#platterRecess)"/>
+    <circle r="302" fill="none" stroke="#000" stroke-opacity="0.9" stroke-width="2"/>
+    <circle r="298" fill="url(#platterSurface)"/>
+    <circle r="284" fill="none" stroke="#0a0a0c" stroke-width="1"/>
+
+    <!-- Vinyl base -->
+    <circle r="278" fill="url(#vinylBase)"/>
+
+    <!-- Groove rings — denser, more variation in opacity -->
+    <g fill="none">
+      <g stroke="#1d1d20" stroke-width="0.4" opacity="0.55">
+        <circle r="272"/><circle r="265"/><circle r="258"/><circle r="251"/>
+        <circle r="244"/><circle r="237"/><circle r="230"/><circle r="223"/>
+        <circle r="216"/><circle r="209"/><circle r="202"/><circle r="195"/>
+        <circle r="188"/><circle r="181"/><circle r="174"/><circle r="167"/>
+        <circle r="160"/><circle r="153"/><circle r="146"/><circle r="139"/>
+        <circle r="132"/><circle r="125"/>
+      </g>
+      <g stroke="#2c2c30" stroke-width="0.3" opacity="0.4">
+        <circle r="268"/><circle r="254"/><circle r="240"/><circle r="226"/>
+        <circle r="212"/><circle r="198"/><circle r="184"/><circle r="170"/>
+        <circle r="156"/><circle r="142"/><circle r="128"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ====== VINYL HIGHLIGHTS — clipped to record area ====== -->
+  <g clip-path="url(#vinylClip)">
+    <!-- Top-lit ambient -->
+    <rect x="322" y="172" width="556" height="556" fill="url(#vinylTopLight)"/>
+    <!-- Three directional crescents -->
+    <rect x="322" y="172" width="556" height="556" fill="url(#vinylHi1)"/>
+    <rect x="322" y="172" width="556" height="556" fill="url(#vinylHi3)"/>
+    <rect x="322" y="172" width="556" height="556" fill="url(#vinylHi2)"/>
+  </g>
+
+  <!-- Edge bright ring (the outermost catch-light) -->
+  <circle cx="600" cy="450" r="278" fill="url(#vinylEdgeCatch)"/>
+  <circle cx="600" cy="450" r="278" fill="none" stroke="#3a3835" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- Label -->
+  <g transform="translate(600, 450)">
+    <circle r="108" fill="#0e0604"/>
+    <circle r="104" fill="url(#labelArt)"/>
+    <!-- Inner label edge highlight (where label meets vinyl) -->
+    <circle r="104" fill="none" stroke="#3a1f10" stroke-opacity="0.6" stroke-width="1"/>
+    <circle r="105.5" fill="none" stroke="#5e2e16" stroke-opacity="0.35" stroke-width="0.6"/>
+    <!-- Spindle -->
+    <circle r="5" fill="#020202"/>
+    <circle r="3" fill="#0a0907"/>
+    <circle r="3" fill="none" stroke="#5a4a3a" stroke-opacity="0.4" stroke-width="0.4"/>
+  </g>
+
+  <!-- ====== HARDWARE — polished chrome pass ====== -->
+
+  <!-- Tonearm tube (chrome cylinder) -->
+  <g transform="translate(1050, 300) rotate(28)">
+    <rect x="0" y="-7" width="230" height="14" rx="3" fill="url(#chromeCylinder)" filter="url(#liftShadow)"/>
+    <!-- Hot specular hairline -->
+    <rect x="3" y="-2.5" width="224" height="1" fill="#f0f0f4" opacity="0.65"/>
+    <rect x="3" y="5" width="224" height="0.6" fill="#000" opacity="0.7"/>
+  </g>
+
+  <!-- Pivot post — chrome stack -->
+  <g transform="translate(1050, 300)">
+    <circle r="46" fill="#000" opacity="0.7" filter="url(#liftShadow)"/>
+    <circle r="42" fill="url(#chromeDisk)"/>
+    <circle r="42" fill="none" stroke="#000" stroke-opacity="0.55" stroke-width="0.8"/>
+    <circle r="30" fill="url(#chromeDisk)" transform="rotate(180)"/>
+    <circle r="30" fill="none" stroke="#000" stroke-opacity="0.6" stroke-width="0.6"/>
+    <circle r="8"  fill="#0a0a0c"/>
+    <circle r="3"  fill="#3a3a40"/>
+  </g>
+
+  <!-- Speed slider — simpler, restrained -->
+  <g transform="translate(1140, 470)">
+    <rect x="-6" y="-90" width="12" height="180" rx="6" fill="url(#recessedSlot)"/>
+    <rect x="-6" y="-90" width="12" height="180" rx="6" fill="none" stroke="#000" stroke-opacity="0.75"/>
+    <rect x="-5" y="-89" width="10" height="0.8" fill="#2c2a26" opacity="0.7"/>
+
+    <g fill="#6a6862" font-family="ui-sans-serif, system-ui" font-size="11" font-weight="500">
+      <circle cx="16" cy="-84" r="1.4" fill="#3c3a36"/>
+      <text x="24" y="-80">33</text>
+      <circle cx="16" cy="-56" r="1.4" fill="#3c3a36"/>
+      <text x="24" y="-52">45</text>
+    </g>
+
+    <!-- Slider thumb — matte (not chrome — target reads dark/grippy) -->
+    <g transform="translate(0, -84)">
+      <rect x="-13" y="-7" width="26" height="14" rx="2.5" fill="#000" opacity="0.7" filter="url(#liftShadow)"/>
+      <rect x="-12" y="-6" width="24" height="12" rx="2" fill="url(#matteSteel)"/>
+      <g stroke="#0c0c10" stroke-width="0.55">
+        <line x1="-8" y1="-3.5" x2="8" y2="-3.5"/>
+        <line x1="-8" y1="-1"   x2="8" y2="-1"/>
+        <line x1="-8" y1="1.5"  x2="8" y2="1.5"/>
+        <line x1="-8" y1="4"    x2="8" y2="4"/>
+      </g>
+      <rect x="-11" y="-5.5" width="22" height="0.8" fill="#54545a" opacity="0.5"/>
+    </g>
+  </g>
+
+  <!-- Power knob — small, dark, simple -->
+  <g transform="translate(1180, 680)">
+    <text x="0" y="-50" text-anchor="middle"
+          font-family="ui-sans-serif, system-ui" font-size="8.5"
+          fill="#54524d" letter-spacing="2.4" font-weight="600">POWER</text>
+
+    <circle r="34" fill="#000" opacity="0.6" filter="url(#liftShadow)"/>
+    <circle r="30" fill="url(#chromeDisk)"/>
+    <circle r="30" fill="none" stroke="#000" stroke-opacity="0.55"/>
+    <circle r="22" fill="url(#matteSteel)"/>
+    <circle r="22" fill="none" stroke="#000" stroke-opacity="0.6" stroke-width="0.5"/>
+
+    <!-- Tiny orange notch — the rare hot accent on the whole deck -->
+    <rect x="-1.5" y="-29" width="3" height="7" rx="1" fill="#f97316" filter="url(#warmGlow)"/>
+
+    <text x="0" y="52" text-anchor="middle"
+          font-family="ui-sans-serif, system-ui" font-size="8.5"
+          fill="#54524d" letter-spacing="2.4" font-weight="600">POWER</text>
+  </g>
+
+  <!-- ====== FINAL MICRO-GRAIN PASS ====== -->
+  <rect x="0" y="0" width="1400" height="900" fill="#000" filter="url(#microGrain)" opacity="0.7"/>
+
+</svg>

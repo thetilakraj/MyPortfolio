@@ -9,19 +9,21 @@ const links = [
 ];
 ---
 
-<header class="border-b border-rule">
+<header
+  class="sticky top-0 z-40 border-b border-rule/70 bg-paper/85 backdrop-blur-md"
+>
   <div
-    class="mx-auto flex max-w-5xl flex-wrap items-baseline justify-between gap-x-8 gap-y-3 px-6 py-5"
+    class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4"
   >
-    <a href={url('/')} class="group no-underline">
-      <span class="font-serif text-[1.0625rem] font-medium tracking-tight"
+    <a href={url('/')} class="no-underline">
+      <span
+        class="font-display text-[0.9rem] font-black uppercase tracking-[0.2em] text-plum"
         >Tilak Raj</span
       >
-      <span class="label ml-3 hidden sm:inline">Toronto</span>
     </a>
 
     <nav aria-label="Primary">
-      <ul class="flex list-none items-baseline gap-7 p-0 text-sm">
+      <ul class="flex list-none items-center gap-8 p-0">
         {
           links.map(({ href, label }) => {
             const current = isCurrent(href, pathname);
@@ -31,8 +33,10 @@ const links = [
                   href={url(href)}
                   aria-current={current ? 'page' : undefined}
                   class:list={[
-                    'no-underline transition-colors hover:text-signal',
-                    current ? 'text-signal' : 'text-ink-soft',
+                    'font-display text-[0.72rem] font-semibold uppercase tracking-[0.18em] no-underline transition-colors',
+                    current
+                      ? 'text-amber'
+                      : 'text-muted hover:text-plum',
                   ]}
                 >
                   {label}
